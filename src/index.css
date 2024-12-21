@@ -72,3 +72,20 @@ button:focus-visible {
 main {
   border: 1px solid red;
 }
+
+
+
+
+:root {
+  --background-color: white;
+  --text-color: black;
+  --button-bg: #007bff;
+  --button-text: white;
+}
+
+/* Global Styles */
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  transition: background-color 0.3s, color 0.3s;
+}

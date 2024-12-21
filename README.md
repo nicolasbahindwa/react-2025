@@ -1,5 +1,15 @@
 file structure:
-
+styles/
+    ├── themes/
+    │   ├── _light.scss
+    │   ├── _dark.scss
+    │   ├── _common.scss
+    │   └── _variables.scss
+    ├── components/
+    │   ├── _buttons.scss
+    │   ├── _cards.scss
+    │   └── _modals.scss
+    └── main.scss
 src/
   ├── assets/                          # Static files (images, fonts)
   │   ├── images/

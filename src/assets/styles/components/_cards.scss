@@ -1,0 +1,9 @@
+@use '../themes/variables' as *;
+
+.card {
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  font-size: $primary-font-size;
+}

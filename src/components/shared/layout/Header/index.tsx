@@ -1,8 +1,11 @@
 import React from 'react'
+import ThemeToggle from '../../../ThemeToggle'
 
 function header() {
   return (
-    <div>header</div>
+    <div>header
+      <ThemeToggle/>
+    </div>
   )
 }
 

@@ -1,0 +1,11 @@
+@use './variables' as *;
+
+body {
+  background-color: $light-background-color;
+  color: $light-primary-color;
+}
+
+body[data-theme='light'] {
+  background-color: $light-background-color;
+  color: $light-primary-color;
+}

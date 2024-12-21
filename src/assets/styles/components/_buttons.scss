@@ -1,0 +1,19 @@
+@use '../themes/variables' as *;
+
+.button {
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  font-size: $primary-font-size;
+  border: 2px solid red;
+}
+
+.button-primary {
+  background-color: blue;
+  color: white;
+}
+
+.button-secondary {
+  background-color: grey;
+  color: white;
+}
