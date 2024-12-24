@@ -15,7 +15,7 @@ import "../../assets/styles/main.scss"
 
 
 const MainLayout: React.FC = () => {
-    const { theme } = useTheme();
+    const {theme}  = useTheme();
 
     // Dynamically set the theme
     useEffect(() => {
