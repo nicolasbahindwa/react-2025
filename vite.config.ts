@@ -8,6 +8,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 export default defineConfig({
   plugins: [react()],
   resolve: {
+    main: './src/main.tsx',
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },

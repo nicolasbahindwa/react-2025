@@ -1,0 +1,21 @@
+@use "sass:map";
+@use "../themes/variables" as v;
+@use "../functions/functions" as f;
+
+.input {
+  width: 100%;
+  padding: f.get-spacing(2);  // Use the function here
+  border: 1px solid rgb(var(--border-medium));
+  border-radius: var(--radius-md);
+  background-color: rgb(var(--bg-primary));
+  color: rgb(var(--text-primary));
+  font-size: map.get(v.$font-sizes, base);
+  line-height: map.get(v.$line-heights, normal);
+  transition: var(--transition-all);
+  
+  &:focus {
+    outline: none;
+    border-color: rgb(var(--color-primary));
+    box-shadow: 0 0 0 2px rgb(var(--color-primary) / 0.2);
+  }
+}

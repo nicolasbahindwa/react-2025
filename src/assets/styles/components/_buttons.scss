@@ -1,19 +1,24 @@
-@use '../themes/variables' as *;
+@use "sass:map";
+@use "../themes/variables" as v;
+@use "../functions/functions" as f;
 
-.button {
-  padding: 10px 20px;
-  border: none;
-  cursor: pointer;
-  font-size: $primary-font-size;
-  border: 2px solid red;
-}
-
-.button-primary {
-  background-color: blue;
-  color: white;
-}
-
-.button-secondary {
-  background-color: grey;
-  color: white;
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: f.get-spacing(2) f.get-spacing(3);  // Using the function
+  border-radius: var(--radius-md);
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.5;
+  transition: var(--transition-colors);
+  
+  &--primary {
+    background-color: rgb(var(--color-primary));
+    color: rgb(var(--bg-primary));
+    
+    &:hover {
+      background-color: rgb(var(--color-primary) / 0.9);
+    }
+  }
 }

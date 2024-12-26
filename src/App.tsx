@@ -6,7 +6,8 @@ import MainLayout from './layouts/(MainLayout)';
 import AuthLayout from './layouts/(AuthLayout)';
 import DashboardLayout from './layouts/(DashboardLayout)';
 import HomePage from './pages/public/HomePage';
-import LoginPage from './pages/public/LoginPage';
+import {LoginPage} from './features/Auth/pages/LoginPage';
+import {RegisterPage} from './features/Auth/pages/RegisterPage';
 import DashboardPage from './pages/private/DashboardPage';
 import UserProfilePage from './pages/private/UserProfilePage';
 import ThemeProviderWrapper from "./context/ThemeContext/ThemeProvider";
@@ -25,6 +26,10 @@ function App() {
         </Route>
         <Route path={routes.login} element={<AuthLayout />}>
           <Route index element={<LoginPage />} />
+        </Route>
+
+        <Route path={routes.register} element={<AuthLayout />}>
+          <Route index element={<RegisterPage />} />
         </Route>
 
         {/* Private Routes */}

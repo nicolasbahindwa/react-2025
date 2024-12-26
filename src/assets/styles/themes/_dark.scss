@@ -1,11 +1,26 @@
 @use './variables' as *;
 
-body {
-  background-color: $dark-background-color;
-  color: $dark-primary-color;
-}
+[data-theme="dark"] {
+  // Base colors
+  --color-primary: hsl(220, 85%, 60%);  // Base blue
+  --color-secondary: hsl(234, 85%, 72%);  // Lighter blue
+  --color-success: hsl(140, 60%, 45%);  // Green
+  --color-warning: hsl(48, 95%, 60%);  // Yellow
+  --color-error: hsl(0, 75%, 55%);  // Red
+  --color-info: hsl(194, 85%, 55%);  // Light blue
 
-body[data-theme='dark'] {
-  background-color: $dark-background-color;
-  color: $dark-primary-color;
+  // Background colors
+  --bg-primary: hsl(210, 20%, 10%);  // Dark background
+  --bg-secondary: hsl(210, 20%, 20%);  // Darker background
+  --bg-tertiary: hsl(210, 15%, 30%);  // Medium dark background
+
+  // Text colors
+  --text-primary: hsl(220, 10%, 95%);  // Light gray text
+  --text-secondary: hsl(210, 10%, 85%);  // Slightly darker gray
+  --text-tertiary: hsl(210, 10%, 70%);  // More muted gray
+
+  // Border colors
+  --border-light: hsl(210, 15%, 30%);  // Dark border
+  --border-medium: hsl(210, 15%, 40%);  // Medium dark border
+  --border-heavy: hsl(210, 15%, 50%);  // Lighter border
 }

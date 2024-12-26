@@ -1,14 +1,9 @@
 import React, { forwardRef } from "react";
-import { ComponentPropsWithoutRef, ReactNode } from "react";
+// import { ComponentPropsWithoutRef, ReactNode } from "react";
 import { Label } from "./Label";
 import { cn } from "@/utils/helpers";
-
-import { BaseFieldProps } from "./types";
-
-interface TextFieldProps
-  extends ComponentPropsWithoutRef<"input">,
-    BaseFieldProps {}
-
+import { TextFieldProps } from "./types";
+ 
 export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
   (
     { label, helperText, error, className, containerClassName, id, ...props },

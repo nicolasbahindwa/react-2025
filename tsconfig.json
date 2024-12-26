@@ -1,17 +1,21 @@
 {
   "compilerOptions": {
-    "target": "ESNext", // Adjust based on your needs
+    "target": "ESNext",
     "module": "ESNext",
-    "jsx": "react-jsx", // Use 'react' for React with JSX support
+    "jsx": "react-jsx", 
     "moduleResolution": "node",
-    "baseUrl": ".", // Base URL for resolving paths
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"] // Alias for the `@` symbol
+      "@/*": ["src/*"]
     },
-    "strict": true, // Enable strict type checking
+    "strict": true,
     "esModuleInterop": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "lib": ["dom", "esnext"], // Include DOM definitions
+    "allowJs": true, // Allow JavaScript files
+    "noEmitOnError": true, // Prevent emitting JS with errors
+    "forceConsistentCasingInFileNames": true // Enforce consistent casing
   },
-  "include": ["src"], // Include your source code
+  "include": ["src"],
   "exclude": ["node_modules"]
 }
