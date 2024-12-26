@@ -1,6 +1,16 @@
 // FormComponents/Radio.tsx
 import React, { forwardRef } from 'react';
 import { ComponentPropsWithoutRef, ReactNode } from 'react';
+import { OptionType } from './types';
+import { Label } from "./Label";
+import { cn } from "@/utils/helpers"; 
+
+
+import { BaseFieldProps } from "./types";
+
+interface TextFieldProps
+  extends ComponentPropsWithoutRef<"input">,
+    BaseFieldProps {}
 
 interface RadioProps extends Omit<ComponentPropsWithoutRef<'input'>, 'type'>, BaseFieldProps {
   options: OptionType[];

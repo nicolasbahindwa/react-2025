@@ -1,6 +1,13 @@
 // FormComponents/EmailField.tsx
 import React, { forwardRef } from 'react';
 import { ComponentPropsWithoutRef, ReactNode } from 'react';
+import { TextField } from './TextField';
+
+import { BaseFieldProps } from "./types";
+
+interface TextFieldProps
+  extends ComponentPropsWithoutRef<"input">,
+    BaseFieldProps {}
 
 interface EmailFieldProps extends Omit<ComponentPropsWithoutRef<'input'>, 'type'>, BaseFieldProps {}
 

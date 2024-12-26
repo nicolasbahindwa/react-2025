@@ -1,6 +1,14 @@
 // FormComponents/Checkbox.tsx
 import React, { forwardRef } from 'react';
 import { ComponentPropsWithoutRef, ReactNode } from 'react';
+import { Label } from './Label';
+import { cn } from '@/utils/helpers';
+
+import { BaseFieldProps } from "./types";
+
+interface TextFieldProps
+  extends ComponentPropsWithoutRef<"input">,
+    BaseFieldProps {}
 
 interface CheckboxProps extends Omit<ComponentPropsWithoutRef<'input'>, 'type'>, BaseFieldProps {}
 

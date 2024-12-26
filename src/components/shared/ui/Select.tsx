@@ -1,6 +1,15 @@
 // FormComponents/Select.tsx
 import React, { forwardRef } from 'react';
 import { ComponentPropsWithoutRef, ReactNode } from 'react';
+import { cn } from '@/utils/helpers';
+import { Label } from "./Label";
+import { OptionType } from "./types";
+
+import { BaseFieldProps } from "./types";
+
+interface TextFieldProps
+  extends ComponentPropsWithoutRef<"input">,
+    BaseFieldProps {}
 
 interface SelectProps extends ComponentPropsWithoutRef<'select'>, BaseFieldProps {
   options: OptionType[];

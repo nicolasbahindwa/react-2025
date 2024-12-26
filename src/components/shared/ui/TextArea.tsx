@@ -1,6 +1,14 @@
 // FormComponents/TextArea.tsx
 import { ComponentPropsWithoutRef, ReactNode } from 'react';
 import React, { forwardRef } from 'react';
+import { Label } from './Label';
+import { cn } from '@/utils/helpers';
+
+import { BaseFieldProps } from "./types";
+
+interface TextFieldProps
+  extends ComponentPropsWithoutRef<"input">,
+    BaseFieldProps {}
 
 interface TextAreaProps extends ComponentPropsWithoutRef<'textarea'>, BaseFieldProps {}
 

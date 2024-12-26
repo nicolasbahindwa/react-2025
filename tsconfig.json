@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "ESNext", // Adjust based on your needs
+    "module": "ESNext",
+    "jsx": "react-jsx", // Use 'react' for React with JSX support
+    "moduleResolution": "node",
+    "baseUrl": ".", // Base URL for resolving paths
+    "paths": {
+      "@/*": ["src/*"] // Alias for the `@` symbol
+    },
+    "strict": true, // Enable strict type checking
+    "esModuleInterop": true,
+    "skipLibCheck": true
+  },
+  "include": ["src"], // Include your source code
+  "exclude": ["node_modules"]
+}
