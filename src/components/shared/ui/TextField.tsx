@@ -1,12 +1,31 @@
+
+import { ComponentPropsWithoutRef } from "react";
+export interface TextFieldProps extends ComponentPropsWithoutRef<"input"> {
+  label?: string;
+  helperText?: string;
+  error?: string;
+  containerClassName?: string;
+  required?: boolean;
+}
+
+// TextField.tsx
 import React, { forwardRef } from "react";
-// import { ComponentPropsWithoutRef, ReactNode } from "react";
 import { Label } from "./Label";
 import { cn } from "@/utils/helpers";
-import { TextFieldProps } from "./types";
+// import { TextFieldProps } from "./types";
  
 export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
   (
-    { label, helperText, error, className, containerClassName, id, ...props },
+    { 
+      label, 
+      helperText, 
+      error, 
+      className, 
+      containerClassName, 
+      id,
+      required,
+      ...props 
+    },
     ref
   ) => {
     const inputId = id || `input-${Math.random().toString(36).slice(2, 11)}`;
@@ -16,6 +35,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
         {label && (
           <Label
             htmlFor={inputId}
+            required={required}
             className={cn(
               "block text-sm font-medium",
               error ? "text-red-500" : "text-gray-700"
@@ -28,6 +48,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
         <input
           ref={ref}
           id={inputId}
+          required={required}
           className={cn(
             "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2",
             "text-sm ring-offset-background",
@@ -64,3 +85,6 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
 );
 
 TextField.displayName = "TextField";
+
+
+ 

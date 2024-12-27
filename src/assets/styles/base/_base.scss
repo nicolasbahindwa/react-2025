@@ -298,3 +298,23 @@ $border-radius: (
     }
   }
   
+
+
+  @mixin generate-color-utilities($prefix, $colors) {
+    @each $color, $shades in $colors {
+      @each $shade, $value in $shades {
+        .#{$prefix}-#{"#{$color}"}-#{$shade} {
+          @if $prefix == 'text' {
+            color: $value;
+          } @else if $prefix == 'bg' {
+            background-color: $value;
+          }
+        }
+      }
+    }
+  }
+  
+
+// Call the Mixin to Generate Text and Background Utilities
+@include generate-color-utilities('text', v.$colors);
+@include generate-color-utilities('bg', v.$colors);
