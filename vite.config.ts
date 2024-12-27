@@ -3,6 +3,7 @@ import react from "@vitejs/plugin-react";
 import { fileURLToPath } from "url";
 import path from "path";
 import dotenv from 'dotenv';
+
 dotenv.config();
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -16,7 +17,7 @@ export default defineConfig({
   },
   define: {
     'process.env': {
-        REACT_APP_API_BASE_URL: JSON.stringify(process.env.REACT_APP_API_BASE_URL || 'https://your-default-api-url.com'),
+        REACT_APP_API_BASE_URL: JSON.stringify(process.env.REACT_APP_API_BASE_URL),
         NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development'),
     },
 },
