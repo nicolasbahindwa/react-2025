@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AuthState, RegisterResponse } from '@/features/Auth/types/auth.types';
+import type { AuthState, RegisterResponse } from '../Types';
 
 const initialState: AuthState = {
   user: null,
   isAuthenticated: false,
-  loading: false,
+  loading: false,  // Initialize loading state
   error: null,
 };
 
@@ -15,17 +15,24 @@ const authSlice = createSlice({
     setUser: (state, action: PayloadAction<RegisterResponse>) => {
       state.user = action.payload;
       state.isAuthenticated = true;
+      state.loading = false;
       state.error = null;
     },
     clearUser: (state) => {
       state.user = null;
       state.isAuthenticated = false;
+      state.loading = false;
+      state.error = null;
     },
     setError: (state, action: PayloadAction<string>) => {
       state.error = action.payload;
+      state.loading = false;
+    },
+    setLoading: (state, action: PayloadAction<boolean>) => {
+      state.loading = action.payload;
     },
   },
 });
 
-export const { setUser, clearUser, setError } = authSlice.actions;
+export const { setUser, clearUser, setError, setLoading } = authSlice.actions;
 export default authSlice.reducer;

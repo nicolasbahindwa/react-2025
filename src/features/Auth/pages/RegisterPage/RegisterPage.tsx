@@ -4,9 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import { TextField } from '@/components/shared/ui/TextField';
 import { Button } from '@/components/shared/ui/Button';
 import { FormRegister } from './types';
-import { useRegisterMutation } from '@/features/Auth/services/api/endpoints/auth';
+import { useRegisterMutation } from '@/features/Auth/services/api/authApi';
 import { useDispatch } from 'react-redux';
-import { setUser, setError } from '@/store/slices/authSlice';
+import { setUser, setError } from '../../services/slice';
 import { ArrowRight } from 'lucide-react';
 
 function RegisterPage() {

@@ -16,8 +16,8 @@ html {
 
 body {
   margin: 0;
-  background-color: rgb(var(--bg-primary));
-  color: rgb(var(--text-primary));
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
 }
 
 // Utility classes

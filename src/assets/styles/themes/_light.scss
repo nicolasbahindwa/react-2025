@@ -2,25 +2,25 @@
 
 [data-theme="light"] {
   // Base colors
-  --color-primary: hsl(217, 91%, 53%);  // Blue
-  --color-secondary: hsl(231, 91%, 63%);  // Lighter blue
-  --color-success: hsl(133, 60%, 40%);  // Green
-  --color-warning: hsl(47, 91%, 54%);  // Yellow
-  --color-error: hsl(0, 75%, 53%);  // Red
-  --color-info: hsl(193, 86%, 47%);  // Cyan
+  --color-primary: #2563EB;
+  --color-secondary: #6366F1;
+  --color-success: #16A34A;
+  --color-warning: #EAB308;
+  --color-error: #DC2626;
+  --color-info: #06B6D4;
 
   // Background colors
-  --bg-primary: hsl(0, 0%, 100%);  // White
-  --bg-secondary: hsl(210, 20%, 96%);  // Light gray
-  --bg-tertiary: hsl(210, 20%, 92%);  // Very light gray
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #F3F4F6;
+  --bg-tertiary: #E5E7EB;
 
   // Text colors
-  --text-primary: hsl(210, 20%, 15%);  // Dark text
-  --text-secondary: hsl(210, 10%, 40%);  // Medium dark text
-  --text-tertiary: hsl(210, 10%, 50%);  // Lighter gray text
+  --text-primary: #111827;
+  --text-secondary: #374151;
+  --text-tertiary: #6B7280;
   
   // Border colors
-  --border-light: hsl(210, 20%, 92%);  // Light border
-  --border-medium: hsl(210, 10%, 75%);  // Medium border
-  --border-heavy: hsl(210, 10%, 60%);  // Darker border
+  --border-light: #E5E7EB;
+  --border-medium: #D1D5DB;
+  --border-heavy: #9CA3AF;
 }

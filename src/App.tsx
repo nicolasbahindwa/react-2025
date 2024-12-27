@@ -12,36 +12,48 @@ import DashboardPage from './pages/private/DashboardPage';
 import UserProfilePage from './pages/private/UserProfilePage';
 import ThemeProviderWrapper from "./context/ThemeContext/ThemeProvider";
 
+import { Provider } from 'react-redux';
+import {PersistGate} from 'redux-persist/integration/react';
+import {store, persistor} from '@/store';
  
 
 function App() {
  
 
   return (
+    
+    <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
     <ThemeProviderWrapper>
-      <Routes>
-        {/* Public Routes */}
-        <Route app={routes.home} element={<MainLayout />}>
-          <Route index element={<HomePage />} />
-        </Route>
-        <Route path={routes.login} element={<AuthLayout />}>
-          <Route index element={<LoginPage />} />
-        </Route>
+      
+          <Routes>
+            {/* Public Routes */}
+            <Route path={routes.home} element={<MainLayout />}>
+                <Route index element={<HomePage />} />
+              </Route>
+            <Route path={routes.login} element={<AuthLayout />}>
+              <Route index element={<LoginPage />} />
+            </Route>
 
-        <Route path={routes.register} element={<AuthLayout />}>
-          <Route index element={<RegisterPage />} />
-        </Route>
+            <Route path={routes.register} element={<AuthLayout />}>
+              <Route index element={<RegisterPage />} />
+            </Route>
 
-        {/* Private Routes */}
-        <Route path={routes.dashboard} element={<DashboardLayout />}>
-          <Route index element={<DashboardPage />} />
-          <Route path={routes.profile} element={<UserProfilePage />} />
-        </Route>
+            {/* Private Routes */}
+            <Route path={routes.dashboard} element={<DashboardLayout />}>
+              <Route index element={<DashboardPage />} />
+              <Route path={routes.profile} element={<UserProfilePage />} />
+            </Route>
 
-        {/* Redirect Unknown Routes */}
-        <Route path="*" element={<Navigate to={routes.home} />} />
-      </Routes>
+            {/* Redirect Unknown Routes */}
+            <Route path="*" element={<Navigate to={routes.home} />} />
+          </Routes>
+      
+        
     </ThemeProviderWrapper>
+    </PersistGate>
+      </Provider>
+    
   );
 }
 
