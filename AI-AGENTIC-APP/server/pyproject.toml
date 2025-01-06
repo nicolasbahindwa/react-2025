@@ -1,0 +1,50 @@
+[tool.poetry]
+name = "AI-MULTI-AGENT"
+version = "0.1.0"
+description = "A project using FastAPI to serve a multi agent AI."
+authors = ["Your Name <nicolasbahindwa@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+fastapi = "*"
+uvicorn = "*"
+pydantic = "*"
+pydantic-core = "*"
+pydantic-settings = "*"
+psycopg2 = "*"
+asyncpg = "*"
+sqlalchemy = "*"
+python-dotenv = "*"
+python-slugify = "*"
+alembic = "*"
+email-validator = "*"
+passlib = {extras = ["bcrypt"], version = "*" }
+bcrypt = "*"
+python-jose = "*"
+pytz = "*"
+python-multipart = "*"
+aiosmtplib = "*"
+jinja2 = "*"
+
+langgraph = "*"
+langgraph-sdk = "*"
+langgraph-checkpoint-sqlite = "*"
+langsmith = "*"
+langchain-community = "*"
+langchain-core = "*"
+langchain-openai = "*"
+notebook = "*"
+tavily-python = "*"
+wikipedia = "*"
+trustcall = "*"
+langgraph-cli = "*"
+
+[tool.poetry.dev-dependencies]
+pytest = "*"
+black = "*"
+
+[build-system]
+requires = ["poetry-core>=1.5.0"]
+build-backend = "poetry.core.masonry.api"

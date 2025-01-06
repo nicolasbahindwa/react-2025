@@ -22,7 +22,7 @@ export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(({
   rows = 4,
   ...props
 }, ref) => {
-  const textareaId = id || `textarea-${Math.random().toString(36).substr(2, 9)}`;
+  const textareaId = id || `textarea-${Math.random().toString(36).slice(2, 9)}`;
 
   return (
     <div className={cn("space-y-2", containerClassName)}>

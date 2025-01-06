@@ -15,6 +15,8 @@ import ThemeProviderWrapper from "./context/ThemeContext/ThemeProvider";
 import { Provider } from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
 import {store, persistor} from '@/store';
+
+ 
  
 
 function App() {
@@ -24,8 +26,8 @@ function App() {
     
     <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-    <ThemeProviderWrapper>
-      
+          <ThemeProviderWrapper>
+           
           <Routes>
             {/* Public Routes */}
             <Route path={routes.home} element={<MainLayout />}>
@@ -49,10 +51,10 @@ function App() {
             <Route path="*" element={<Navigate to={routes.home} />} />
           </Routes>
       
-        
-    </ThemeProviderWrapper>
-    </PersistGate>
-      </Provider>
+         
+        </ThemeProviderWrapper>
+      </PersistGate>
+    </Provider>
     
   );
 }

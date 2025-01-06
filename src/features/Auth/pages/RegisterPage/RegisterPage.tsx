@@ -200,11 +200,15 @@ function RegisterPage() {
 
   return (
     <div className="max-w-md mx-auto p-6">
-      <h2 className="text-2xl font-semibold text-center">Create Your Account</h2>
+      <h2 className="text-2xl font-semibold text-center">
+        Create Your Account
+      </h2>
 
       {registerError && (
         <div className="mt-4 p-3 bg-red-100 text-red-700 rounded">
-          {registerError instanceof Error ? registerError.message : 'Registration failed'}
+          {registerError instanceof Error
+            ? registerError.message
+            : "Registration failed"}
         </div>
       )}
 
@@ -214,24 +218,35 @@ function RegisterPage() {
         <div className="flex items-center">
           <input
             type="checkbox"
-            {...register('terms')}
+            {...register("terms")}
             className="h-4 w-4 text-blue-600"
             disabled={isLoading}
           />
           <label className="ml-2 text-sm text-gray-600">
-            I agree to the <a href="/terms" className="text-blue-600">Terms and Conditions</a>
+            I agree to the{" "}
+            <a href="/terms" className="text-blue-600">
+              Terms and Conditions
+            </a>
           </label>
         </div>
-        
 
-        <Button 
-          type="submit" 
+        <Button
+          type="submit"
           fullWidth
           rightIcon={<ArrowRight />}
           disabled={isLoading}
           className="mt-4"
         >
-          {isLoading ? 'Registering...' : 'Register'}
+          {isLoading ? "Registering..." : "Register"}
+        </Button>
+        <Button
+          variant="primary"
+          size="md"
+          leftIcon={<ArrowRight />}
+          disabled={isLoading}
+          onClick={() => console.log("clicked")}
+        >
+          Click Me
         </Button>
       </form>
     </div>

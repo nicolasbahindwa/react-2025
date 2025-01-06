@@ -1,14 +1,37 @@
-import { isRejectedWithValue } from '@reduxjs/toolkit';
-import type { Middleware } from 'redux';
+import { isRejectedWithValue, Middleware } from "@reduxjs/toolkit";
+import { logError } from "@/utils/logger"; // Import logError from logger
 
-/**
- * Middleware for logging RTK Query errors
- */
+interface EndpointMetaData {
+  arg: {
+    endpointName?: string;
+  };
+  requestId: string;
+}
+
+interface ErrorPayload {
+  status?: number;
+  data?: any;
+  error?: string;
+}
+
 const rtkQueryErrorLogger: Middleware = () => (next) => (action) => {
   if (isRejectedWithValue(action)) {
-    console.error('RTK Query error:', action.payload);
-    // You could also send to an error reporting service here
+    const meta = action.meta as EndpointMetaData;
+    const payload = action.payload as ErrorPayload;
+
+    const errorPayload = {
+      timestamp: new Date().toISOString(),
+      endpointName: meta.arg?.endpointName || "unknown",
+      requestId: meta.requestId,
+      status: payload.status,
+      error: payload.error,
+      data: payload.data,
+    };
+
+    // Log the error
+    logError(errorPayload);
   }
+
   return next(action);
 };
 

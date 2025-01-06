@@ -1,0 +1,9 @@
+langgraph
+langchain-core
+langchain-community
+langchain_cohere
+langchain_anthropic
+langchain_ollama
+langchain-openai
+langchain-fireworks
+trustcall

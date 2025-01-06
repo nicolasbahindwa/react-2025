@@ -27,7 +27,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(({
   placeholder,
   ...props
 }, ref) => {
-  const selectId = id || `select-${Math.random().toString(36).substr(2, 9)}`;
+  const selectId = id || `select-${Math.random().toString(36).slice(2, 9)}`;
 
   return (
     <div className={cn("space-y-2", containerClassName)}>

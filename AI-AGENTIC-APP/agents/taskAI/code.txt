@@ -1,0 +1,431 @@
+# main.py
+from config.settings import Configuration, ModelConfig
+from graph.graph_builder import create_graph
+
+# Create and use the graph
+graph = create_graph()
+
+# Use with configuration
+config = Configuration()
+response = graph.invoke({
+    "messages": [...],
+    "configurable": {
+        "user_id": "user-123",
+        "model_name": "fireworks"
+    }
+})
+
+
+
+# graph/graph_builder.py
+
+from typing import Literal
+from langchain_core.runnables import RunnableConfig
+from langgraph.graph import END, START, MessagesState, StateGraph
+from langgraph.store.base import BaseStore
+
+# Import configuration
+from config.settings import Configuration, ModelConfig
+
+# Import nodes
+from nodes.task_maistro import task_mAIstro
+from nodes.update_nodes import update_todos, update_profile, update_instructions
+
+class GraphBuilder:
+    """Builder class for the conversation graph"""
+    
+    @staticmethod
+    def route_message(
+        state: MessagesState,
+        config: RunnableConfig,
+        store: BaseStore
+    ) -> Literal[END, "update_todos", "update_instructions", "update_profile"]:
+        """Route messages to appropriate update nodes based on tool calls."""
+        message = state["messages"][-1]
+        
+        if len(message.tool_calls) == 0:
+            return END
+            
+        tool_call = message.tool_calls[0]
+        update_type = tool_call["args"]["update_type"]
+        
+        if update_type == "user":
+            return "update_profile"
+        elif update_type == "todo":
+            return "update_todos"
+        elif update_type == "instructions":
+            return "update_instructions"
+        else:
+            raise ValueError(f"Unknown update type: {update_type}")
+
+    @classmethod
+    def build(cls) -> StateGraph:
+        """Build and return the compiled state graph."""
+        # Initialize graph with configuration
+        builder = StateGraph(MessagesState, config_schema=Configuration)
+        
+        # Add all nodes
+        builder.add_node("task_mAIstro", task_mAIstro)
+        builder.add_node("update_todos", update_todos)
+        builder.add_node("update_profile", update_profile)
+        builder.add_node("update_instructions", update_instructions)
+        
+        # Define the conversation flow
+        builder.add_edge(START, "task_mAIstro")
+        builder.add_conditional_edges(
+            "task_mAIstro",
+            cls.route_message,
+            {
+                "update_profile": "update_profile",
+                "update_todos": "update_todos",
+                "update_instructions": "update_instructions",
+                END: END
+            }
+        )
+        
+        # Add return edges to main conversation node
+        builder.add_edge("update_todos", "task_mAIstro")
+        builder.add_edge("update_profile", "task_mAIstro")
+        builder.add_edge("update_instructions", "task_mAIstro")
+        
+        return builder.compile()
+
+def create_graph(store: BaseStore = None) -> StateGraph:
+    """Factory function to create and configure the graph."""
+    if store is None:
+        from langgraph.store.memory import InMemoryStore
+        store = InMemoryStore()
+        
+    return GraphBuilder.build()
+
+
+
+# models/schemas.py
+from datetime import datetime
+from typing import Literal, Optional
+from pydantic import BaseModel, Field
+
+class Profile(BaseModel):
+    """User profile schema"""
+    name: Optional[str] = Field(description="The user's name", default=None)
+    location: Optional[str] = Field(description="The user's location", default=None)
+    job: Optional[str] = Field(description="The user's job", default=None)
+    connections: list[str] = Field(description="Personal connections", default_factory=list)
+    interests: list[str] = Field(description="User interests", default_factory=list)
+
+class ToDo(BaseModel):
+    """ToDo item schema"""
+    task: str = Field(description="The task to be completed.")
+    time_to_complete: Optional[int] = Field(description="Estimated time (minutes).")
+    deadline: Optional[datetime] = Field(description="Task deadline", default=None)
+    solutions: list[str] = Field(description="Actionable solutions", min_items=1, default_factory=list)
+    status: Literal["not started", "in progress", "done", "archived"] = Field(
+        description="Task status", default="not started"
+    )
+
+class UpdateMemory(TypedDict):
+    """Decision on what memory type to update"""
+    update_type: Literal["user", "todo", "instructions"]
+
+
+
+#nodes/task_maistro.py
+from langchain_core.messages import SystemMessage
+from config.settings import Configuration  # Added this import
+from models.llm_config import get_model
+from models.schemas import UpdateMemory
+from prompts.system_prompts import MODEL_SYSTEM_MESSAGE
+from services.memory_service import MemoryService
+from langgraph.graph import MessagesState  # Added this for type hint
+from langchain_core.runnables import RunnableConfig  # Added this for type hint
+from langgraph.store.base import BaseStore  # Added this for type hint
+
+def task_mAIstro(state: MessagesState, config: RunnableConfig, store: BaseStore):
+    """Main chatbot node for processing user input"""
+    
+    try:
+        configurable = Configuration.from_runnable_config(config)
+        memory_service = MemoryService(store, configurable.user_id)
+        
+        # Get all required memories
+        user_profile = memory_service.get_profile()
+        todo = memory_service.get_todos()
+        instructions = memory_service.get_instructions()
+        
+        # Format system message
+        system_msg = MODEL_SYSTEM_MESSAGE.format(
+            user_profile=user_profile, 
+            todo=todo, 
+            instructions=instructions
+        )
+        
+        # Get model response
+        model = get_model()
+        response = model.bind_tools([UpdateMemory]).invoke(
+            [SystemMessage(content=system_msg)] + state["messages"]
+        )
+        
+        return {"messages": [response]}
+
+    except Exception as e:
+        return {"messages": [{"role": "system", "content": f"Error: {str(e)}"}]}
+
+
+# nodes/update_nodes.py
+import uuid
+from datetime import datetime
+from langchain_core.messages import SystemMessage, HumanMessage
+from trustcall import create_extractor
+from models.llm_config import get_model
+from models.schemas import Profile, ToDo
+from prompts.system_prompts import TRUSTCALL_INSTRUCTION, CREATE_INSTRUCTIONS
+from utils.tool_utils import Spy, extract_tool_info
+
+def update_profile(state: MessagesState, config: RunnableConfig, store: BaseStore):
+    """Update user profile information"""
+    configurable = Configuration.from_runnable_config(config)
+    user_id = configurable.user_id
+    namespace = ("profile", user_id)
+    
+    # Get existing memories
+    existing_items = store.search(namespace)
+    existing_memories = [
+        (item.key, "Profile", item.value) for item in existing_items
+    ] if existing_items else None
+    
+    # Prepare messages for extraction
+    instruction = TRUSTCALL_INSTRUCTION.format(time=datetime.now().isoformat())
+    messages = [SystemMessage(content=instruction)] + state["messages"][:-1]
+    
+    # Create and invoke extractor
+    model = get_model()
+    profile_extractor = create_extractor(
+        model,
+        tools=[{
+            "type": "function",
+            "function": {
+                "name": "Profile",
+                "description": "Extracts user profile information",
+                "parameters": Profile.model_json_schema(),
+            },
+        }],
+        tool_choice="Profile",
+    )
+    
+    result = profile_extractor.invoke({
+        "messages": messages,
+        "existing": existing_memories
+    })
+    
+    # Save results
+    for r, rmeta in zip(result["responses"], result["response_metadata"]):
+        store.put(
+            namespace,
+            rmeta.get("json_doc_id", str(uuid.uuid4())),
+            r.model_dump(mode="json"),
+        )
+    
+    return {
+        "messages": [{
+            "role": "tool",
+            "content": "updated profile",
+            "tool_call_id": state["messages"][-1].tool_calls[0]["id"],
+        }]
+    }
+
+def update_todos(state: MessagesState, config: RunnableConfig, store: BaseStore):
+    """Update todo list items"""
+    configurable = Configuration.from_runnable_config(config)
+    user_id = configurable.user_id
+    namespace = ("todo", user_id)
+    
+    # Similar structure to update_profile but for todos
+    existing_items = store.search(namespace)
+    existing_memories = [
+        (item.key, "ToDo", item.value) for item in existing_items
+    ] if existing_items else None
+    
+    instruction = TRUSTCALL_INSTRUCTION.format(time=datetime.now().isoformat())
+    messages = [SystemMessage(content=instruction)] + state["messages"][:-1]
+    
+    spy = Spy()
+    model = get_model()
+    todo_extractor = create_extractor(
+        model,
+        tools=[{
+            "type": "function",
+            "function": {
+                "name": "ToDo",
+                "description": "Captures task information",
+                "parameters": ToDo.model_json_schema(),
+            },
+        }],
+        tool_choice="ToDo",
+        enable_inserts=True,
+    ).with_listeners(on_end=spy)
+    
+    result = todo_extractor.invoke({
+        "messages": messages,
+        "existing": existing_memories
+    })
+    
+    # Save results and return update message
+    for r, rmeta in zip(result["responses"], result["response_metadata"]):
+        store.put(
+            namespace,
+            rmeta.get("json_doc_id", str(uuid.uuid4())),
+            r.model_dump(mode="json"),
+        )
+    
+    todo_update_msg = extract_tool_info(spy.called_tools, "ToDo")
+    return {
+        "messages": [{
+            "role": "tool",
+            "content": todo_update_msg,
+            "tool_call_id": state["messages"][-1].tool_calls[0]["id"],
+        }]
+    }
+
+def update_instructions(state: MessagesState, config: RunnableConfig, store: BaseStore):
+    """Update system instructions"""
+    configurable = Configuration.from_runnable_config(config)
+    user_id = configurable.user_id
+    namespace = ("instructions", user_id)
+    
+    existing_memory = store.get(namespace, "user_instructions")
+    
+    system_msg = CREATE_INSTRUCTIONS.format(
+        current_instructions=existing_memory.value if existing_memory else None
+    )
+    
+    model = get_model()
+    new_memory = model.invoke(
+        [SystemMessage(content=system_msg)]
+        + state["messages"][:-1]
+        + [HumanMessage(content="Please update the instructions based on the conversation")]
+    )
+    
+    store.put(namespace, "user_instructions", {"memory": new_memory.content})
+    
+    return {
+        "messages": [{
+            "role": "tool",
+            "content": "updated instructions",
+            "tool_call_id": state["messages"][-1].tool_calls[0]["id"],
+        }]
+    }
+
+
+#prompts/syste_prompt
+MODEL_SYSTEM_MESSAGE = """..."""
+TRUSTCALL_INSTRUCTION = """..."""
+CREATE_INSTRUCTIONS = """..."""
+
+
+# services/memory_service.py
+
+class MemoryService:
+     def __init__(self, store: BaseStore, user_id: str):
+        self.store = store
+        self.user_id = user_id
+        self._cache = {}
+        
+    def get_profile(self, use_cache: bool = True):
+        cache_key = f"profile_{self.user_id}"
+        if use_cache and cache_key in self._cache:
+            return self._cache[cache_key]
+            
+        namespace = ("profile", self.user_id)
+        memories = self.store.search(namespace)
+        result = memories[0].value if memories else None
+        
+        if use_cache:
+            self._cache[cache_key] = result
+        return result
+    
+    def get_todos(self):
+        namespace = ("todo", self.user_id)
+        memories = self.store.search(namespace)
+        return "\n".join(f"{mem.value}" for mem in memories)
+    
+    def get_instructions(self):
+        namespace = ("instructions", self.user_id)
+        memories = self.store.search(namespace)
+        return memories[0].value if memories else ""
+
+
+# config/settings.py
+
+import os
+from dataclasses import dataclass, fields
+from typing import Any, Literal, Optional
+from langchain_core.runnables import RunnableConfig
+from langchain_fireworks import ChatFireworks
+from langchain_anthropic import ChatAnthropic
+from langchain_cohere import ChatCohere
+from langchain_ollama import ChatOllama
+
+@dataclass(kw_only=True)
+class Configuration:
+    """Base configuration for the application"""
+    user_id: str = "default-user"
+    model_name: Literal["fireworks", "anthropic", "cohere", "ollama"] = "fireworks"
+    
+    def __post_init__(self):
+        if not self.user_id:
+            raise ValueError("user_id cannot be empty")
+    
+    @classmethod
+    def from_runnable_config(cls, config: Optional[RunnableConfig] = None) -> "Configuration":
+        configurable = config["configurable"] if config and "configurable" in config else {}
+        values: dict[str, Any] = {
+            f.name: os.environ.get(f.name.upper(), configurable.get(f.name))
+            for f in fields(cls) if f.init
+        }
+        return cls(**{k: v for k, v in values.items() if v})
+
+class ModelConfig:
+    """Model configuration and factory"""
+    @staticmethod
+    def get_model():
+        """Configure and return the LLM model based on configuration"""
+        model_name = os.getenv("MODEL_NAME", "fireworks")
+        
+        if model_name == "fireworks":
+            return ChatFireworks(
+                model="accounts/fireworks/models/deepseek-coder-1b-base",
+                max_tokens=32768,
+                max_retries=2
+            )
+        elif model_name == "anthropic":
+            return ChatAnthropic(
+                model="claude-3-5-sonnet-latest",
+                temperature=0
+            )
+        elif model_name == "cohere":
+            return ChatCohere(
+                model="command-r-plus-08-2024",
+                temperature=0
+            )
+        elif model_name == "ollama":
+            return ChatOllama(
+                base_url="http://localhost:11434",
+                model="llama3.1",
+                temperature=0,
+                streaming=True
+            )
+        else:
+            raise ValueError(f"Unknown model name: {model_name}")
+
+class PathConfig:
+    """Path configuration for the application"""
+    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    PROMPTS_DIR = os.path.join(BASE_DIR, "prompts")
+    MODELS_DIR = os.path.join(BASE_DIR, "models")
+
+# Environment variables with defaults
+ENV_CONFIG = {
+    "USER_ID": os.getenv("USER_ID", "default-user"),
+    "MODEL_NAME": os.getenv("MODEL_NAME", "fireworks"),
+    "DEBUG": os.getenv("DEBUG", "False").lower() == "true",
+}

@@ -1,0 +1,73 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.env
+*.venv
+*.egg-info/
+*.egg
+*.log
+logs/
+*.logs
+
+# Virtual environments
+venv/
+ENV/
+env/
+.venv/
+.Python
+
+# FastAPI specific
+instance/
+app.db
+*.sqlite3
+
+# Docker
+docker-compose.yml
+.dockerignore
+Dockerfile
+docker-compose.override.yml
+docker-compose.override.yaml
+# Docker specific files
+**/data/
+**/logs/
+*.pid
+*.sock
+
+# Postgres Database files
+*.pgsql
+*.pgsql-journal
+pg_data/
+pg_dump.sql
+
+# SQLAlchemy generated SQLite database files (if applicable)
+*.db
+*.sqlite
+
+# Migrations (Alembic)
+migrations/
+alembic.ini
+versions/
+
+# Logs
+*.log
+*.out
+*.err
+logs/
+log/
+
+# Test files
+test_reports/
+
+# VS Code
+.vscode/
+
+# OS-generated files
+.DS_Store
+Thumbs.db
+.idea/
+
+# Environment Variables
+.env
+*.env.*
