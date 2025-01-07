@@ -1,0 +1,18 @@
+Account Activation Successful!
+
+Hi {{ username }},
+
+We're excited to let you know that your account has been successfully activated!
+
+Thank you for joining us. You can now log in and start using your account.
+
+Click the link below to go to your account:
+{{ url }}
+
+If you didn't create an account, please ignore this email.
+
+---
+
+If you have any questions, feel free to contact us at support@example.com.
+
+Thank you for choosing us!

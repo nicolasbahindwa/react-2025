@@ -1,0 +1,15 @@
+Welcome to Imperfect API, {{ username }}!
+
+We're excited to have you on board. Imperfect API is your go-to platform for all your development needs.
+
+To get started, please verify your email by clicking the link below:
+
+Activate Your Account: {{ activation_url }}
+
+If you have any questions, feel free to contact us at: support@imperfectapi.com.
+
+Best regards,
+The Imperfect API Team
+
+-----------------------------------
+© 2024 Imperfect API. All rights reserved.

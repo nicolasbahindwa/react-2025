@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Imperfect API</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #5d9cec;
+        }
+        p {
+            margin: 20px 0;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #5d9cec;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Imperfect API, {{ username }}!</h1>
+        <p>We're excited to have you on board. Imperfect API is your go-to platform for all your development needs.</p>
+        <p>To get started, please verify your email by clicking the button below:</p>
+        <p><a class="button" href="{{ url }}">Activate Your Account</a></p>
+        <p>If you have any questions, feel free to <a href="mailto:support@imperfectapi.com">contact us</a>.</p>
+        <p>Best regards,</p>
+        <p>The Imperfect API Team</p>
+        <div class="footer">
+            <p>&copy; 2024 Imperfect API. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>

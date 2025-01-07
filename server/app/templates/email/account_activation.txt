@@ -1,0 +1,12 @@
+<!-- templates/email/account_activation.txt -->
+Welcome to Our Platform!
+
+Hi {{ username }},
+
+Thank you for registering. To activate your account, please visit this link:
+
+{{ url }}
+
+This link will expire in {{ expires_in_hours }} hours.
+
+If you didn't create an account, please ignore this email.
