@@ -4,7 +4,7 @@ import { clearUser } from '@/features/Auth/services/slice';
 import { ENV } from '@/config/environment';
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: ENV.apiUrl.replace(/["']/g, '').replace(/\/$/, ''),
+    baseUrl: ENV.API_BASE_URL.replace(/["']/g, '').replace(/\/$/, ''),
   
     prepareHeaders: (headers, { getState }) => {
         const token = (getState() as RootState).auth.user?.token;
@@ -33,4 +33,4 @@ export const baseApi = createApi({
   tagTypes: ['Auth'],
 });
 
-console.log("Base URL:", ENV.apiUrl.replace(/["']/g, '').replace(/\/$/, ''));
+console.log("Base URL:", ENV.API_BASE_URL.replace(/["']/g, '').replace(/\/$/, ''));
