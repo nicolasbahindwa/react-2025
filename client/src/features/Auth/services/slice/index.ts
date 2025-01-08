@@ -4,7 +4,7 @@ import type { AuthState, RegisterResponse } from '../Types';
 const initialState: AuthState = {
   user: null,
   isAuthenticated: false,
-  loading: false,  // Initialize loading state
+  loading: false,
   error: null,
 };
 
@@ -14,7 +14,7 @@ const authSlice = createSlice({
   reducers: {
     setUser: (state, action: PayloadAction<RegisterResponse>) => {
       state.user = action.payload;
-      state.isAuthenticated = false;
+      state.isAuthenticated = true;
       state.loading = false;
       state.error = null;
     },
@@ -31,6 +31,8 @@ const authSlice = createSlice({
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.loading = action.payload;
     },
+    extraReducerExample: (state) => { // Example of an extra reducer // Handle specific state changes here
+    }
   },
 });
 

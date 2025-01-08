@@ -4,15 +4,14 @@ import { clearUser } from '@/features/Auth/services/slice';
 import { ENV } from '@/config/environment';
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: ENV.API_BASE_URL.replace(/["']/g, '').replace(/\/$/, ''),
-  
-    prepareHeaders: (headers, { getState }) => {
-        const token = (getState() as RootState).auth.user?.token;
-        if (token) {
-        headers.set('Authorization', `Bearer ${token}`);
-        }
-        return headers;
-    },
+  baseUrl: ENV.API_BASE_URL.replace(/["']/g, '').replace(/\/$/, ''),
+  prepareHeaders: (headers, { getState }) => {
+    const token = (getState() as RootState).auth.user?.token;
+    if (token) {
+      headers.set('Authorization', `Bearer ${token}`);
+    }
+    return headers;
+  },
 });
 
 const baseQueryWithReauth = async (args: string | FetchArgs, api: any, extraOptions: {}) => {
@@ -20,7 +19,6 @@ const baseQueryWithReauth = async (args: string | FetchArgs, api: any, extraOpti
   
   if (result.error?.status === 401) {
     api.dispatch(clearUser());
-    // Redirect to login page
     window.location.href = '/login';
   }
   
@@ -32,5 +30,3 @@ export const baseApi = createApi({
   endpoints: () => ({}),
   tagTypes: ['Auth'],
 });
-
-console.log("Base URL:", ENV.API_BASE_URL.replace(/["']/g, '').replace(/\/$/, ''));
