@@ -1,6 +1,6 @@
 import { TextField } from '@/components/shared/ui/TextField';
 import { UseFormRegister, FieldErrors } from 'react-hook-form';
-import { FormRegister } from './types';
+import { FormRegister } from '../../types';
 
 interface Props {
   register: UseFormRegister<FormRegister>;
@@ -8,7 +8,7 @@ interface Props {
   isLoading: boolean;
 }
 
-const RegisterFormFields: React.FC<Props> = ({ register, errors, isLoading }) => (
+export const RegisterFormFields: React.FC<Props> = ({ register, errors, isLoading }) => (
   <>
     <TextField
       label="Username"
@@ -45,5 +45,4 @@ const RegisterFormFields: React.FC<Props> = ({ register, errors, isLoading }) =>
     />
   </>
 );
-
-export default RegisterFormFields;
+ 

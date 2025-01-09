@@ -1,5 +1,5 @@
 import { Middleware } from '@reduxjs/toolkit';
-import { baseApi } from '@/lib/api/baseApi';
+import { baseApi } from '@/lib/baseApi';
 import rtkQueryErrorLogger from './rtkQueryErrorLogger';
 import {
   FLUSH,

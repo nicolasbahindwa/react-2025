@@ -6,6 +6,15 @@ export interface FormRegister {
   terms: boolean;
 }
 
+export interface FormLogin {
+  email: string;       
+  password: string;  
+  rememberMe: boolean;  
+}
+
+
+// store
+
 export interface RegisterResponse {
   id: string;
   username: string;

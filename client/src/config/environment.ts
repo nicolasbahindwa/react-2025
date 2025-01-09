@@ -25,5 +25,5 @@ const getEnvVar = (name: string, fallback?: string): string => {
       // Add other variables you want to check
     });
   }
-  
+
   export type Environment = typeof ENV;

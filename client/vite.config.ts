@@ -16,6 +16,15 @@ export default defineConfig(({ mode }) => {
         '@': path.resolve(__dirname, './src'),
       },
     },
+    "compilerOptions": {
+      "strict": true,
+      "noImplicitAny": true,
+      "strictFunctionTypes": true,
+      "skipLibCheck": true,
+      "esModuleInterop": true,
+      "baseUrl": ".",
+      "paths": { "@/*": ["src/*"] }
+    },
     envDir: path.resolve(__dirname, '..'), // Point to parent directory for .env
     css: {
       preprocessorOptions: {

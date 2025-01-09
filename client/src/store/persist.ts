@@ -1,7 +1,7 @@
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { rootReducer } from './reducers';
-import { baseApi } from '@/lib/api/baseApi';
+import { baseApi } from '@/lib/baseApi';
 
 const persistConfig = {
   key: 'root',
