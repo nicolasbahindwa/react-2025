@@ -182,6 +182,7 @@ from app.exceptions.database import (
 from app.schemas.user import UserResponse
 from app.schemas.auth import TokenSchema, UserLogin, ResetPassword
 from app.schemas.token import RefreshTokenRequest
+from app.core.ratelimit import RateLimit
 
 router = APIRouter(prefix="/auth", tags=["authentication"])
 
@@ -245,6 +246,7 @@ async def test_email(
         raise DatabaseError(detail=f"Failed to send test email: {str(e)}")
 
 @router.post("/activate/{token}", response_model=UserResponse)
+@rate_limiter.rate_limit(max_requests=5, window_seconds=60, block_minutes=15)
 async def activate_account(
     token: str, 
     background_tasks: BackgroundTasks,

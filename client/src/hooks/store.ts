@@ -39,7 +39,5 @@ export const useCommonSelectors = () => {
     getCommentsForPost: (postId: number) => select((state) => state.comments.byPostId[postId]),
     
     // Add any other common selectors here
- 
-
   };
 };

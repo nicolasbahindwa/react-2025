@@ -13,6 +13,7 @@ export const authApi = baseApi.injectEndpoints({
         body: credentials,
       }),
       async onQueryStarted(_: void, { dispatch, queryFulfilled }: { dispatch: Dispatch; queryFulfilled: Promise<any> }) {
+        console.log("*** ------------------- starting")
         dispatch(setLoading(true)); // Set loading to true at the start
         try {
           const { data } = await queryFulfilled;

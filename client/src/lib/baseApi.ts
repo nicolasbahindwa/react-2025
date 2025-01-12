@@ -4,13 +4,15 @@ import { clearCredentials } from '@/features/Auth/services/slice/authSlice';
 import { ENV } from '@/config/environment';
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: String(ENV.apiUrl).replace(/["']/g, '').replace(/\/$/, ''), 
+  baseUrl: String(ENV.apiUrl).replace(/["']/g, "").replace(/\/$/, ""),
+  credentials: "include",
   prepareHeaders: (headers, { getState }) => {
+    headers.set("Content-Type", "application/json");
     const token = (getState() as RootState).auth.user?.token;
     if (token) {
-      headers.set('Authorization', `Bearer ${token}`);
+      headers.set("Authorization", `Bearer ${token}`);
     }
-    
+
     return headers;
   },
 });

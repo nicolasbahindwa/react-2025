@@ -1,6 +1,7 @@
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/shared/ui/Button';
+import {Label} from '@/components/shared/ui/Label';
 import { FormLogin } from './types';
 import { useLoginMutation } from '@/features/Auth/services/actions';
 import { useAppDispatch } from '@/hooks/store';
@@ -61,6 +62,12 @@ function LoginPage() {
         >
           {isLoading ? 'Logging in...' : 'Login'}
         </Button>
+        <Label className="block text-sm text-gray-600">
+          Forgot your password? <a href="/forgot-password">Reset it</a>
+        </Label>
+        <Label className="block text-sm text-gray-600">
+          Don't have an account? <a href="/register">Register now</a>
+        </Label>
       </form>
     </div>
   );

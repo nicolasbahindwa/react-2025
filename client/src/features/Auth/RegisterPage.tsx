@@ -4,7 +4,7 @@ import { Button } from '@/components/shared/ui/Button';
 import { FormRegister } from './types';
 import { useRegisterMutation } from '@/features/Auth/services/actions';
 import { useAppDispatch } from '@/hooks/store';
-import { setError, setUser } from './services/slice/userAuthSlice';
+import { setError } from './services/slice/userAuthSlice';
 import { ArrowRight } from 'lucide-react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { registerSchema } from './validations/registration_validation';
