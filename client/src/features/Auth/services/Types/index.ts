@@ -1,4 +1,5 @@
 export interface RegisterRequest {
+  id?:string;
   username: string;
   email: string;
   password: string;
@@ -38,8 +39,11 @@ export interface LoginResponse {
 
 export interface AuthState {
   user: LoginResponse | null;
+  tokens: {
+    accessToken: string | null;
+    refreshToken: string | null;
+  };
   isAuthenticated: boolean;
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | null;
 }
-

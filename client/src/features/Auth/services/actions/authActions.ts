@@ -6,6 +6,7 @@ import { Dispatch } from '@reduxjs/toolkit';
 
 export const authApi = baseApi.injectEndpoints({
   endpoints: (build: EndpointBuilder<typeof baseApi.reducer, string, string>) => ({
+     
     login: build.mutation<LoginResponse, LoginRequest>({
       query: (credentials: LoginRequest) => ({
         url: '/auth/login',
@@ -13,15 +14,12 @@ export const authApi = baseApi.injectEndpoints({
         body: credentials,
       }),
       async onQueryStarted(_: void, { dispatch, queryFulfilled }: { dispatch: Dispatch; queryFulfilled: Promise<any> }) {
-        dispatch(setLoading(true));
+        dispatch(setLoading());
         try {
           const { data } = await queryFulfilled;
-          dispatch(setCredentials(data)
-        );
+          dispatch(setCredentials(data));
         } catch (error) {
           dispatch(setError(error instanceof Error ? error.message : 'Login failed'));
-        } finally {
-          dispatch(setLoading(false));
         }
       },
       invalidatesTags: ['Auth'],

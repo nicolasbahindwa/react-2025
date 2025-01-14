@@ -1,5 +1,7 @@
 import { Middleware } from '@reduxjs/toolkit';
 import { baseApi } from '@/lib/baseApi';
+import { userApi } from '../../features/Auth/services/actions/userRegistrationAction';
+import { authApi } from '../../features/Auth/services/actions/authActions';
 import rtkQueryErrorLogger from './rtkQueryErrorLogger';
 import {
   FLUSH,
@@ -23,6 +25,8 @@ export const getMiddleware = (getDefaultMiddleware: any) => {
 
   return middleware.concat([
     baseApi.middleware,
+    userApi.middleware,
+    authApi.middleware,
     rtkQueryErrorLogger,
   ]);
 };

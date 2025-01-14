@@ -1,10 +1,14 @@
+ 
+
+
+// src/store/api/authApi.ts
 import { baseApi } from '@/lib/baseApi';
 import { EndpointBuilder } from '@reduxjs/toolkit/dist/query/endpointDefinitions';
 import type { RegisterRequest, RegisterResponse } from '../Types';
-import { setUser, setError, setLoading } from '../slice/userAuthSlice';
+import { setUser, setStatus, setError, clearUser } from '../slice/userAuthSlice';
 import { Dispatch } from '@reduxjs/toolkit';
 
-export const authApi = baseApi.injectEndpoints({
+export const userApi = baseApi.injectEndpoints({
   endpoints: (build: EndpointBuilder<typeof baseApi.reducer, string, string>) => ({
     register: build.mutation<RegisterResponse, RegisterRequest>({
       query: (credentials: RegisterRequest) => ({
@@ -13,15 +17,46 @@ export const authApi = baseApi.injectEndpoints({
         body: credentials,
       }),
       async onQueryStarted(_: void, { dispatch, queryFulfilled }: { dispatch: Dispatch; queryFulfilled: Promise<any> }) {
-        console.log("*** ------------------- starting")
-        dispatch(setLoading(true)); // Set loading to true at the start
+        dispatch(setStatus('loading'));
         try {
           const { data } = await queryFulfilled;
-          dispatch(setUser(data)); // Dispatch setUser with the correct payload
-        } catch (error: unknown) {
-          dispatch(setError(error instanceof Error ? error.message : 'Registration failed')); // Proper error handling
-        } finally {
-          dispatch(setLoading(false)); // Ensure loading is false after completion
+          dispatch(setUser(data));
+        } catch (error) {
+          dispatch(setError(error instanceof Error ? error.message : 'Registration failed'));
+        }
+      },
+      invalidatesTags: ['Auth'],
+    }),
+    editUser: build.mutation<RegisterResponse, Partial<RegisterRequest>>({
+      
+      query: (userData: RegisterRequest) => ({
+        url: `/users/${userData.id}`,
+        method: 'PATCH',
+        body: userData,
+      }),
+      async onQueryStarted(_: void, { dispatch, queryFulfilled }: { dispatch: Dispatch; queryFulfilled: Promise<any> }) {
+        dispatch(setStatus('loading'));
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(setUser(data));
+        } catch (error) {
+          dispatch(setError(error instanceof Error ? error.message : 'Failed to update user'));
+        }
+      },
+      invalidatesTags: ['Auth'],
+    }),
+    deleteUser: build.mutation<void, string>({
+      query: (id:string) => ({
+        url: `/users/${id}`,
+        method: 'DELETE',
+      }),
+      async onQueryStarted(_: void, { dispatch, queryFulfilled }: { dispatch: Dispatch; queryFulfilled: Promise<any> }) {
+        dispatch(setStatus('loading'));
+        try {
+          await queryFulfilled;
+          dispatch(clearUser());
+        } catch (error) {
+          dispatch(setError(error instanceof Error ? error.message : 'Failed to delete user'));
         }
       },
       invalidatesTags: ['Auth'],
@@ -30,4 +65,8 @@ export const authApi = baseApi.injectEndpoints({
   overrideExisting: false,
 });
 
-export const { useRegisterMutation } = authApi;
+export const {
+  useRegisterMutation,
+  useEditUserMutation,
+  useDeleteUserMutation,
+} = userApi;
