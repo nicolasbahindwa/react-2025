@@ -21,29 +21,36 @@ export interface RegisterState {
 
 
 
-export interface LoginRequest {
-  email: string;     // The email address for login
-  password: string;  // The password for login
+export interface AuthUser {
+  id: string;
+  email: string;
+  name: string;
+  roles: string[];
 }
 
+export interface AuthTokens {
+  accessToken: string | null;
+  refreshToken: string | null;
+}
+
+export interface LoginRequest {
+  email: string;
+  password: string;
+}
 
 export interface LoginResponse {
-  accessToken: string;  // The access token for authentication
-  refreshToken: string; // The refresh token for session renewal
-  user: {
-    id: string;
-    username: string;
-    email: string;
-  };
+  user: AuthUser;
+  accessToken: string;
+  refreshToken: string;
+  expiresIn: number;
 }
 
 export interface AuthState {
-  user: LoginResponse | null;
-  tokens: {
-    accessToken: string | null;
-    refreshToken: string | null;
-  };
+  user: AuthUser | null;
+  tokens: AuthTokens;
   isAuthenticated: boolean;
-  status: 'idle' | 'loading' | 'succeeded' | 'failed';
+  status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
+  lastLoginTime: string | null;
+  sessionExpiresAt: string | null;
 }
