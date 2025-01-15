@@ -1,16 +1,14 @@
-// src/store/slices/authSlice.ts
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import type { RegisterState, RegisterResponse } from '../Types';
-import { RootState } from '../../../../store/index';
- 
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RegisterState, RegisterResponse } from "../Types/user.types";
+
 const initialState: RegisterState = {
   user: null,
   status: 'idle',
   error: null,
 };
 
-const authSlice = createSlice({
-  name: 'auth',
+const userAuthSlice = createSlice({
+  name: 'userAuth',
   initialState,
   reducers: {
     setUser: (state, action: PayloadAction<RegisterResponse>) => {
@@ -18,42 +16,31 @@ const authSlice = createSlice({
       state.status = 'succeeded';
       state.error = null;
     },
-    setStatus: (state, action: PayloadAction<RegisterState['status']>) => {
-      state.status = action.payload;
-      if (action.payload === 'loading') {
-        state.error = null;
-      }
-    },
-    setError: (state, action: PayloadAction<string>) => {
-      state.status = 'failed';
-      state.error = action.payload;
-    },
     clearUser: (state) => {
       state.user = null;
       state.status = 'idle';
       state.error = null;
     },
+    setStatus: (state, action: PayloadAction<'idle' | 'loading' | 'succeeded' | 'failed'>) => {
+      state.status = action.payload;
+    },
+    setError: (state, action: PayloadAction<string>) => {
+      state.status = 'failed';
+      state.error = action.payload;
+    },
   },
 });
 
-export const { setUser, setStatus, setError, clearUser } = authSlice.actions;
+export const {
+  setUser,
+  clearUser,
+  setStatus,
+  setError,
+} = userAuthSlice.actions;
 
-export default authSlice.reducer;
+// Typed selectors
+export const selectCurrentUser = (state: { userAuth: RegisterState }) => state.userAuth.user;
+export const selectRegisterStatus = (state: { userAuth: RegisterState }) => state.userAuth.status;
+export const selectRegisterError = (state: { userAuth: RegisterState }) => state.userAuth.error;
 
-
-
-// Fixing the TypeScript error caused by PersistPartial
-export const selectUser = (state: RootState): RegisterResponse | null =>
-  (state as any).auth.user; // Alternatively, cast to RootState if PersistPartial issues persist
-
-export const selectAuthStatus = (state: RootState): RegisterState['status'] =>
-  (state as any).auth.status;
-
-export const selectAuthError = (state: RootState): string | null =>
-  (state as any).auth.error;
-
-export const selectIsAuthenticated = (state: RootState): boolean =>
-  (state as any).auth.user !== null;
- 
-
- 
+export default userAuthSlice.reducer;

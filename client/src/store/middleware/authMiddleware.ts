@@ -1,17 +1,20 @@
-import { Middleware } from "@reduxjs/toolkit";
-import { clearCredentials } from "../../features/Auth/services/slice/authSlice";
+import { Middleware } from '@reduxjs/toolkit';
+import { RootState } from '../types';
+import { clearCredentials } from '@/features/Auth/services/slice/authSlice';
 
-export const authMiddleware: Middleware = (store) => (next) => (action) => {
+export const authMiddleware: Middleware<{}, RootState> = (store) => (next) => (action) => {
   const result = next(action);
   const state = store.getState();
 
-  // Check for session expiration
-  if (
-    state.auth.sessionExpiresAt &&
-    new Date(state.auth.sessionExpiresAt) <= new Date()
-  ) {
-    store.dispatch(clearCredentials());
-    window.location.href = "/login";
+  // Check for token expiration
+  if (state.auth.tokens?.accessToken) {
+    const expirationTime = new Date(state.auth.sessionExpiresAt || '').getTime();
+    const currentTime = new Date().getTime();
+
+    if (currentTime >= expirationTime) {
+      store.dispatch(clearCredentials());
+      window.location.href = '/login';
+    }
   }
 
   return result;

@@ -7,12 +7,13 @@ import { getEnhancers } from './enhancers';
 
 export const store = configureStore({
   reducer: persistedReducer,
-  middleware: getMiddleware,
-  enhancers: getEnhancers,
-  devTools: ENV.nodeEnv !== 'production',
+  middleware: (getDefaultMiddleware) => getMiddleware(getDefaultMiddleware),
+  enhancers: getEnhancers, // Directly pass getEnhancers
+  devTools: ENV.nodeEnv !== 'production', // Enable DevTools in non-production environments
 });
 
 export const persistor = persistStore(store);
 
+// Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
