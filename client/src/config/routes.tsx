@@ -6,4 +6,5 @@ export const routes = {
     dashboard: "/dashboard",
     profile: '/dashboard/profile',
     register: "/register",
+    chat: "/chat",
 }

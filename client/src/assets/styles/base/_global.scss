@@ -1,0 +1,33 @@
+/* Global styles */
+@use "sass:map";
+@use "./colors" as colors;
+
+html {
+    font-size: 16px; /* Base font size for rem units */
+    line-height: 1.5;
+    color: var(--color-text-primary);
+    background-color: var(--color-background-primary);
+  }
+  
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    color: var(--color-text-primary);
+    background-color: var(--color-background-primary);
+  }
+  
+  /* Images */
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+  
+  /* Horizontal Rule */
+  hr {
+    border: 0;
+    height: 1px;
+    background-color: var(--color-border-default);
+    margin: 1rem 0;
+  }

@@ -29,7 +29,7 @@ export default defineConfig(({ mode }) => {
     css: {
       preprocessorOptions: {
         scss: {
-          additionalData: `@use "@/assets/styles/themes/_variables.scss" as *;`,
+          additionalData: `@use "@/assets/styles/abstracts/_variables.scss" as *;`,
         },
       },
       devSourcemap: true,

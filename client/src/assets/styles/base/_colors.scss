@@ -1,0 +1,143 @@
+@use "sass:map";
+// Core Color Palette
+// Primary Colors - Brand blue with adjusted saturation for better readability
+$color-primary: (
+  50: hsl(215, 90%, 98%),
+  100: hsl(215, 90%, 95%),
+  200: hsl(215, 85%, 90%),
+  300: hsl(215, 80%, 80%),
+  400: hsl(215, 75%, 65%),
+  500: hsl(215, 70%, 55%),  // Base primary color
+  600: hsl(215, 75%, 45%),
+  700: hsl(215, 80%, 35%),
+  800: hsl(215, 85%, 25%),
+  900: hsl(215, 90%, 15%)
+);
+
+// Neutral Colors - Warmer grays for better visual comfort
+$color-neutral: (
+  50: hsl(220, 5%, 98%),
+  100: hsl(220, 5%, 95%),
+  200: hsl(220, 5%, 90%),
+  300: hsl(220, 5%, 80%),
+  400: hsl(220, 5%, 65%),
+  500: hsl(220, 5%, 50%),
+  600: hsl(220, 5%, 35%),
+  700: hsl(220, 5%, 25%),
+  800: hsl(220, 5%, 15%),
+  900: hsl(220, 5%, 10%)
+);
+
+// Feedback Colors
+$color-success: (
+  50: hsl(150, 90%, 95%),
+  100: hsl(150, 85%, 90%),
+  200: hsl(150, 80%, 80%),
+  300: hsl(150, 75%, 65%),
+  400: hsl(150, 70%, 55%),
+  500: hsl(150, 65%, 45%),  // Base success color
+  600: hsl(150, 70%, 35%),
+  700: hsl(150, 75%, 30%),
+  800: hsl(150, 80%, 25%),
+  900: hsl(150, 85%, 20%)
+);
+
+$color-warning: (
+  50: hsl(45, 100%, 95%),
+  100: hsl(45, 95%, 90%),
+  200: hsl(45, 90%, 80%),
+  300: hsl(45, 85%, 70%),
+  400: hsl(45, 80%, 60%),
+  500: hsl(45, 90%, 50%),  // Base warning color
+  600: hsl(45, 95%, 40%),
+  700: hsl(45, 100%, 35%),
+  800: hsl(45, 100%, 30%),
+  900: hsl(45, 100%, 25%)
+);
+
+$color-error: (
+  50: hsl(0, 90%, 95%),
+  100: hsl(0, 85%, 90%),
+  200: hsl(0, 80%, 80%),
+  300: hsl(0, 75%, 70%),
+  400: hsl(0, 70%, 65%),
+  500: hsl(0, 75%, 55%),  // Base error color
+  600: hsl(0, 80%, 45%),
+  700: hsl(0, 85%, 40%),
+  800: hsl(0, 90%, 35%),
+  900: hsl(0, 95%, 30%)
+);
+
+$color-info: (
+  50: hsl(200, 90%, 95%),
+  100: hsl(200, 85%, 90%),
+  200: hsl(200, 80%, 80%),
+  300: hsl(200, 75%, 70%),
+  400: hsl(200, 70%, 60%),
+  500: hsl(200, 75%, 50%),  // Base info color
+  600: hsl(200, 80%, 45%),
+  700: hsl(200, 85%, 40%),
+  800: hsl(200, 90%, 35%),
+  900: hsl(200, 95%, 30%)
+);
+
+// Semantic Design Tokens
+$color-text: (
+  primary: map.get($color-neutral, 900),
+  secondary: map.get($color-neutral, 700),
+  tertiary: map.get($color-neutral, 500),
+  disabled: map.get($color-neutral, 400),
+  inverse: map.get($color-neutral, 50),
+  brand: map.get($color-primary, 700),
+  error: map.get($color-error, 700),
+  success: map.get($color-success, 700),
+  warning: map.get($color-warning, 800)
+);
+
+$color-background: (
+  page: map.get($color-neutral, 50),
+  surface: white,
+  surface-alt: map.get($color-neutral, 100),
+  surface-raised: white,
+  overlay: rgba(map.get($color-neutral, 900), 0.4),
+  inverse: map.get($color-neutral, 900),
+  brand: map.get($color-primary, 500),
+  error-subtle: map.get($color-error, 50),
+  success-subtle: map.get($color-success, 50),
+  warning-subtle: map.get($color-warning, 50)
+);
+
+$color-border: (
+  default: map.get($color-neutral, 200),
+  strong: map.get($color-neutral, 300),
+  inverse: map.get($color-neutral, 700),
+  focus: map.get($color-primary, 500),
+  error: map.get($color-error, 500),
+  success: map.get($color-success, 500)
+);
+
+$color-action: (
+  primary: map.get($color-primary, 500),
+  primary-hover: map.get($color-primary, 600),
+  primary-active: map.get($color-primary, 700),
+  primary-disabled: map.get($color-neutral, 200),
+  secondary: map.get($color-neutral, 200),
+  secondary-hover: map.get($color-neutral, 300),
+  secondary-active: map.get($color-neutral, 400),
+  secondary-disabled: map.get($color-neutral, 100)
+);
+// Helper function to access colors
+@function get-color($category, $variant) {
+    @if map.has-key($category, $variant) {
+      @return map.get($category, $variant);
+    }
+    @error "Unknown color variant: #{$variant} in category #{$category}";
+    @return null;
+  }
+
+// Usage example:
+// .button-primary {
+//   background-color: get-color($color-action, 'primary');
+//   color: get-color($color-text, 'inverse');
+//   border: 1px solid get-color($color-border, 'default');
+// }

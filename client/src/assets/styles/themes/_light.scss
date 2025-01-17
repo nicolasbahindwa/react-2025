@@ -1,26 +1,24 @@
-@use './variables' as *;
+@use "sass:map";
+@use "../base/colors" as colors;
 
-[data-theme="light"] {
-  // Base colors
-  --color-primary: #2563EB;
-  --color-secondary: #6366F1;
-  --color-success: #16A34A;
-  --color-warning: #EAB308;
-  --color-error: #DC2626;
-  --color-info: #06B6D4;
+// Light Theme Variables
+$light-theme: (
+  "color-text-primary": map.get(colors.$color-neutral, 900),
+  "color-text-secondary": map.get(colors.$color-neutral, 700),
+  "color-text-tertiary": map.get(colors.$color-neutral, 500),
+  "color-background-primary": map.get(colors.$color-neutral, 50),
+  "color-background-secondary": map.get(colors.$color-neutral, 100),
+  "color-background-tertiary": map.get(colors.$color-neutral, 200),
+  "color-action-primary": map.get(colors.$color-primary, 500),
+  "color-action-primary-hover": map.get(colors.$color-primary, 600),
+  "color-action-primary-active": map.get(colors.$color-primary, 700),
+  "button-primary-text": map.get(colors.$color-neutral, 50),
+  "button-primary-border": transparent,
+);
 
-  // Background colors
-  --bg-primary: #FFFFFF;
-  --bg-secondary: #F3F4F6;
-  --bg-tertiary: #E5E7EB;
-
-  // Text colors
-  --text-primary: #111827;
-  --text-secondary: #374151;
-  --text-tertiary: #6B7280;
-  
-  // Border colors
-  --border-light: #E5E7EB;
-  --border-medium: #D1D5DB;
-  --border-heavy: #9CA3AF;
+// Generate CSS variables from the theme map
+:root {
+  @each $key, $value in $light-theme {
+    --#{$key}: #{$value};
+  }
 }

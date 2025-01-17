@@ -1,26 +1,24 @@
-@use './variables' as *;
+@use "sass:map";
+@use "../base/colors" as colors;
 
+// Dark Theme Variables
+$dark-theme: (
+  "color-text-primary": map.get(colors.$color-neutral, 50),
+  "color-text-secondary": map.get(colors.$color-neutral, 200),
+  "color-text-tertiary": map.get(colors.$color-neutral, 400),
+  "color-background-primary": map.get(colors.$color-primary, 900),
+  "color-background-secondary": map.get(colors.$color-neutral, 800),
+  "color-background-tertiary": map.get(colors.$color-neutral, 700),
+  "color-action-primary": map.get(colors.$color-primary, 500),
+  "color-action-primary-hover": map.get(colors.$color-primary, 600),
+  "color-action-primary-active": map.get(colors.$color-primary, 700),
+  "button-primary-text": map.get(colors.$color-neutral, 900),
+  "button-primary-border": transparent,
+);
+
+// Generate CSS variables from the theme map
 [data-theme="dark"] {
-  // Base colors
-  --color-primary: #3B82F6;
-  --color-secondary: #818CFA;
-  --color-success: #22C55E;
-  --color-warning: #FACD15;
-  --color-error: #EF4444;
-  --color-info: #22D3EE;
-
-  // Background colors
-  --bg-primary: #111827;
-  --bg-secondary: #1F2937;
-  --bg-tertiary: #374151;
-
-  // Text colors
-  --text-primary: #F3F4F6;
-  --text-secondary: #D1D5DB;
-  --text-tertiary: #9CA3AF;
-  
-  // Border colors
-  --border-light: #374151;
-  --border-medium: #4B5563;
-  --border-heavy: #6B7280;
+  @each $key, $value in $dark-theme {
+    --#{$key}: #{$value};
+  }
 }

@@ -1,5 +1,8 @@
 @use "sass:map";
-@use  './variables';
+ 
 @use  './light';
 @use  './dark';
-@use  './common';
+ 
+
+$light-theme: light.$light-theme;
+$dark-theme: dark.$dark-theme;
