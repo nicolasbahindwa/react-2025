@@ -1,10 +1,36 @@
-/* Reset margins, padding, and box-sizing */
-*,
-*::before,
-*::after {
+// _reset.scss
+@use "sass:map";
+@use "sass:math";
+@use '../abstracts/variables' as v;
+@use './colors' as color;
+
+*, *::before, *::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Document */
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: map.get(v.$font-weights, "bold");
+  line-height: 1.2;
+}
+
+/* Media */
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Forms */
+input, button, textarea, select {
+  font: inherit;
+  color: map.get(color.$color-neutral, 800)
 }
 
 /* Remove list styles */
@@ -25,6 +51,7 @@ button {
   padding: 0;
   font: inherit;
   cursor: pointer;
+  outline: inherit;
 }
 
 /* Remove default table spacing */
@@ -34,8 +61,49 @@ table {
 }
 
 /* Reset form elements */
-input, textarea, select, button {
-  font-family: inherit;
-  font-size: inherit;
-  color: inherit;
+
+
+/* Additional form resets */
+input {
+  &[type="search"] {
+    -webkit-appearance: textfield;
+    outline-offset: -2px;
+  }
+  
+  &[type="number"] {
+    -moz-appearance: textfield;
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
+}
+
+/* Remove text-shadow in selection highlight */
+::selection {
+  text-shadow: none;
+}
+
+/* Remove the default vertical scrollbar in IE */
+textarea {
+  overflow: auto;
+  vertical-align: top;
+}
+
+/* Remove gaps in links underline in iOS 8+ and Safari 8+ */
+a {
+  -webkit-text-decoration-skip: objects;
+}
+
+/* Remove animations for people who've turned them off */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

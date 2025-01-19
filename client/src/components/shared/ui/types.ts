@@ -19,28 +19,53 @@ export interface TextFieldProps
 
 
 
-export const buttonVariants = {
-  primary: 'bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500',
-  secondary: 'bg-gray-600 text-white hover:bg-gray-700 focus:ring-gray-500',
-  outline: 'border border-gray-300 bg-transparent hover:bg-gray-50 focus:ring-gray-500',
-  ghost: 'bg-transparent hover:bg-gray-50 focus:ring-gray-500',
-  link: 'bg-transparent underline-offset-4 hover:underline text-blue-600 hover:text-blue-700'
-} as const;
+// types button
+// types.ts
 
-export const buttonSizes = {
-  sm: 'px-3 py-1.5 text-sm',
-  md: 'px-4 py-2 text-base',
-  lg: 'px-6 py-3 text-lg'
-} as const;
+// Define button variants
+export type ButtonVariant = 
+  | "primary"
+  | "secondary" 
+  | "tertiary"
+  | "success"
+  | "warning"
+  | "error"
+  | "ghost"
+  | "link";
 
-export type ButtonVariant = keyof typeof buttonVariants;
-export type ButtonSize = keyof typeof buttonSizes;
+export type ButtonSize = "sm" | "md" | "lg";
 
-export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
   size?: ButtonSize;
   isLoading?: boolean;
   fullWidth?: boolean;
-  leftIcon?: ReactNode;
-  rightIcon?: ReactNode;
+  leftIcon?: React.ReactNode;
+  rightIcon?: React.ReactNode;
 }
+
+// Define button styles for each variant
+export const buttonVariants: Record<ButtonVariant, string> = {
+  primary: "bg-[var(--action-primary)] text-[var(--text-inverse)] hover:bg-[var(--action-primary-hover)] active:bg-[var(--action-primary-active)] disabled:bg-[var(--action-primary-disabled)] disabled:text-[var(--text-disabled)] focus:ring-[var(--border-focus)]",
+  
+  secondary: "bg-[var(--bg-surface)] text-[var(--text-primary)] border border-[var(--border-default)] hover:bg-[var(--bg-surface-alt)] hover:border-[var(--border-strong)] active:bg-[var(--action-secondary-active)] disabled:text-[var(--text-disabled)] focus:ring-[var(--border-focus)]",
+  
+  tertiary: "bg-transparent text-[var(--text-primary)] hover:bg-[var(--bg-surface-alt)] active:bg-[var(--action-secondary-active)] disabled:text-[var(--text-disabled)] focus:ring-[var(--border-focus)]",
+  
+  success: "bg-[var(--success-500)] text-[var(--text-inverse)] hover:bg-[var(--success-600)] active:bg-[var(--success-700)] disabled:bg-[var(--success-200)] disabled:text-[var(--text-disabled)] focus:ring-[var(--success-400)]",
+  
+  warning: "bg-[var(--warning-500)] text-[var(--text-primary)] hover:bg-[var(--warning-600)] active:bg-[var(--warning-700)] disabled:bg-[var(--warning-200)] disabled:text-[var(--text-disabled)] focus:ring-[var(--warning-400)]",
+  
+  error: "bg-[var(--error-500)] text-[var(--text-inverse)] hover:bg-[var(--error-600)] active:bg-[var(--error-700)] disabled:bg-[var(--error-200)] disabled:text-[var(--text-disabled)] focus:ring-[var(--error-400)]",
+  
+  ghost: "bg-transparent text-[var(--text-primary)] hover:bg-[var(--bg-surface-alt)] active:bg-[var(--action-secondary-active)] disabled:text-[var(--text-disabled)] focus:ring-[var(--border-focus)]",
+  
+  link: "bg-transparent text-[var(--text-brand)] hover:underline disabled:text-[var(--text-disabled)] focus:ring-[var(--border-focus)] p-0"
+};
+
+// Define button sizes
+export const buttonSizes: Record<ButtonSize, string> = {
+  sm: "px-3 py-1.5 text-sm",
+  md: "px-4 py-2 text-base",
+  lg: "px-6 py-3 text-lg"
+};

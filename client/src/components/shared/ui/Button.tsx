@@ -1,14 +1,15 @@
 import React, { forwardRef } from "react";
-import { cn } from "@/utils/helpers";
+import { cn } from "@/utils/helpers"; // Ensure this is your utility for classnames
 import { ButtonProps, buttonVariants, buttonSizes } from "./types";
+import Spinner from "./Spinner";
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
       children,
       className,
-      variant = "primary",
-      size = "md",
+      variant = "primary", // Default to primary variant
+      size = "md", // Default to medium size
       isLoading = false,
       disabled,
       fullWidth,
@@ -19,6 +20,10 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     },
     ref
   ) => {
+    // Ensure variant and size are valid keys
+    const variantClass = buttonVariants[variant] || buttonVariants.primary;
+    const sizeClass = buttonSizes[size] || buttonSizes.md;
+
     return (
       <button
         ref={ref}
@@ -28,12 +33,12 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           // Base styles
           "inline-flex items-center justify-center font-medium rounded-md",
           "focus:outline-none focus:ring-2 focus:ring-offset-2",
-          "transition-colors duration-200",
+          "transition-all duration-200",
           "disabled:opacity-50 disabled:cursor-not-allowed",
           // Variant styles
-          buttonVariants[variant],
+          variantClass,
           // Size styles
-          buttonSizes[size],
+          sizeClass,
           // Full width style
           fullWidth && "w-full",
           className
@@ -41,34 +46,20 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         {...props}
       >
         {isLoading ? (
-          <>
-            <svg
-              className="animate-spin -ml-1 mr-2 h-4 w-4"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <circle
-                className="opacity-25"
-                cx="12"
-                cy="12"
-                r="10"
-                stroke="currentColor"
-                strokeWidth="4"
-              />
-              <path
-                className="opacity-75"
-                fill="currentColor"
-                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-              />
-            </svg>
-            Loading...
-          </>
+          <div className="flex items-center">
+            <span>
+              Loading <Spinner />
+            </span>
+          </div>
         ) : (
           <>
-            {leftIcon && <span className="mr-2">{leftIcon}</span>}
+            {leftIcon && (
+              <span className="mr-2 inline-flex items-center">{leftIcon}</span>
+            )}
             {children}
-            {rightIcon && <span className="ml-2">{rightIcon}</span>}
+            {rightIcon && (
+              <span className="ml-2 inline-flex items-center">{rightIcon}</span>
+            )}
           </>
         )}
       </button>
@@ -77,49 +68,3 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 );
 
 Button.displayName = "Button";
-
-// Example usage:
-/* 
-import { Button } from '@/components/ui/button';
-
-function MyComponent() {
-  return (
-    <div>
-      <Button>Default Button</Button>
-      
-      <Button variant="secondary" size="lg">
-        Large Secondary
-      </Button>
-      
-      <Button 
-        variant="outline" 
-        leftIcon={<IconComponent />}
-        isLoading={isLoading}
-      >
-        With Icon
-      </Button>
-      
-      <Button variant="ghost" fullWidth>
-        Full Width Ghost
-      </Button>
-      
-      <Button variant="link">
-        Link Style
-      </Button>
-    </div>
-
-    <div className="space-y-4 mt-8">
-        <h2>Button Examples</h2>
-        <Button variant="secondary">Secondary</Button>
-        <Button variant="outline">Outline</Button>
-        <Button variant="ghost">Ghost</Button>
-        <Button variant="link">Link Style</Button>
-        <Button size="sm">Small</Button>
-        <Button size="lg">Large</Button>
-        <Button leftIcon={<Download />}>Download</Button>
-        <Button isLoading>Processing</Button>
-        <Button disabled>Disabled</Button>
-      </div>
-  );
-}
-*/

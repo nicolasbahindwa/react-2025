@@ -50,7 +50,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
           id={inputId}
           required={required}
           className={cn(
-            "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2",
+            "input flex h-10 w-full rounded-md border border-input bg-background px-3 py-2",
             "text-sm ring-offset-background",
             "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
             "disabled:cursor-not-allowed disabled:opacity-50",
@@ -75,7 +75,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
         )}
 
         {error && (
-          <p id={`${inputId}-error`} className="text-sm text-red-500">
+          <p id={`${inputId}-error`} className="font-bold message-error">
             {error}
           </p>
         )}

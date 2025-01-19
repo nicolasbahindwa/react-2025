@@ -1,0 +1,155 @@
+// // _colors-utils.scss
+// @use "sass:map";
+// @use "./colors" as c; // Assuming your colors are in a colors file
+
+// // Generate color utility classes
+// @each $shade in (50, 100, 200, 300, 400, 500, 600, 700, 800, 900) {
+//   // Text colors
+//   .text-primary-#{$shade} {
+//     color: map.get(c.$color-primary, $shade);
+//   }
+  
+//   // Background colors
+//   .bg-primary-#{$shade} {
+//     background-color: map.get(c.$color-primary, $shade);
+//   }
+// }
+
+// // Semantic text colors
+// @each $name, $value in c.$color-text {
+//   .text-#{$name} {
+//     color: $value;
+//   }
+// }
+
+// // Semantic background colors
+// @each $name, $value in c.$color-background {
+//   .bg-#{$name} {
+//     background-color: $value;
+//   }
+// }
+
+
+
+// _colors-utils.scss
+@use "sass:map";
+@use "sass:string";
+@use "./colors" as c;
+
+// Function to create CSS custom properties
+@function create-css-var($name) {
+  @return var(--#{$name});
+}
+
+// Root variables
+:root {
+  // Generate CSS variables for all color scales
+  @each $scale-name, $scale in (
+    "primary": c.$color-primary,
+    "neutral": c.$color-neutral,
+    "success": c.$color-success,
+    "warning": c.$color-warning,
+    "error": c.$color-error,
+    "info": c.$color-info
+  ) {
+    @each $shade, $value in $scale {
+      --color-#{$scale-name}-#{$shade}: #{$value};
+    }
+  }
+
+  // Generate semantic token variables
+  @each $token, $value in c.$color-text {
+    --color-text-#{$token}: #{$value};
+  }
+  
+  @each $token, $value in c.$color-background {
+    --color-bg-#{$token}: #{$value};
+  }
+  
+  @each $token, $value in c.$color-border {
+    --color-border-#{$token}: #{$value};
+  }
+  
+  @each $token, $value in c.$color-action {
+    --color-action-#{$token}: #{$value};
+  }
+}
+
+// Color scale utilities
+@each $scale-name, $scale in (
+  "primary": c.$color-primary,
+  "neutral": c.$color-neutral,
+  "success": c.$color-success,
+  "warning": c.$color-warning,
+  "error": c.$color-error,
+  "info": c.$color-info
+) {
+  @each $shade in (50, 100, 200, 300, 400, 500, 600, 700, 800, 900) {
+    // Text colors
+    .text-#{$scale-name}-#{$shade} {
+      color: create-css-var("color-#{$scale-name}-#{$shade}");
+    }
+    
+    // Background colors
+    .bg-#{$scale-name}-#{$shade} {
+      background-color: create-css-var("color-#{$scale-name}-#{$shade}");
+    }
+    
+    // Border colors
+    .border-#{$scale-name}-#{$shade} {
+      border-color: create-css-var("color-#{$scale-name}-#{$shade}");
+    }
+  }
+}
+
+// Semantic utilities
+// Text colors
+@each $token, $value in c.$color-text {
+  .text-#{$token} {
+    color: create-css-var("color-text-#{$token}");
+  }
+}
+
+// Background colors
+@each $token, $value in c.$color-background {
+  .bg-#{$token} {
+    background-color: create-css-var("color-bg-#{$token}");
+  }
+}
+
+// Border colors
+@each $token, $value in c.$color-border {
+  .border-#{$token} {
+    border-color: create-css-var("color-border-#{$token}");
+  }
+}
+
+// Action colors
+@each $token, $value in c.$color-action {
+  .action-#{$token} {
+    background-color: create-css-var("color-action-#{$token}");
+    
+    &:disabled {
+      background-color: create-css-var("color-action-primary-disabled");
+    }
+  }
+}
+
+// Helper mixins for common patterns
+@mixin interactive-element($base-color: "primary") {
+  background-color: create-css-var("color-action-#{$base-color}");
+  color: create-css-var("color-text-inverse");
+  
+  &:hover {
+    background-color: create-css-var("color-action-#{$base-color}-hover");
+  }
+  
+  &:active {
+    background-color: create-css-var("color-action-#{$base-color}-active");
+  }
+  
+  &:disabled {
+    background-color: create-css-var("color-action-#{$base-color}-disabled");
+    color: create-css-var("color-text-disabled");
+  }
+}

@@ -108,7 +108,7 @@ $color-background: (
 );
 
 $color-border: (
-  default: map.get($color-neutral, 200),
+  default: map.get($color-primary, 900),
   strong: map.get($color-neutral, 300),
   inverse: map.get($color-neutral, 700),
   focus: map.get($color-primary, 500),
@@ -126,18 +126,3 @@ $color-action: (
   secondary-active: map.get($color-neutral, 400),
   secondary-disabled: map.get($color-neutral, 100)
 );
-// Helper function to access colors
-@function get-color($category, $variant) {
-    @if map.has-key($category, $variant) {
-      @return map.get($category, $variant);
-    }
-    @error "Unknown color variant: #{$variant} in category #{$category}";
-    @return null;
-  }
-
-// Usage example:
-// .button-primary {
-//   background-color: get-color($color-action, 'primary');
-//   color: get-color($color-text, 'inverse');
-//   border: 1px solid get-color($color-border, 'default');
-// }

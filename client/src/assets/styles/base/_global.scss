@@ -1,33 +1,27 @@
 /* Global styles */
 @use "sass:map";
-@use "./colors" as colors;
+@use "../base/colors" as c;
 
+
+  /* Document */
 html {
-    font-size: 16px; /* Base font size for rem units */
-    line-height: 1.5;
-    color: var(--color-text-primary);
-    background-color: var(--color-background-primary);
-  }
+  font-size: 16px;
+  scroll-behavior: smooth;
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+ 
+body { 
+  color: var(--color-text-primary); 
+  // background-color: create-css-var("color-background-primary");
+  background-color: var(--color-background-primary); 
+  line-height: 1.5; 
+  text-rendering: optimizeSpeed; 
+  margin: 0; 
+  padding: 0; 
+  font-family: 'Helvetica Neue', 
+  Arial, sans-serif; min-height: 100vh;
+ }
   
-  body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Helvetica Neue', Arial, sans-serif;
-    color: var(--color-text-primary);
-    background-color: var(--color-background-primary);
-  }
-  
-  /* Images */
-  img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-  }
-  
-  /* Horizontal Rule */
-  hr {
-    border: 0;
-    height: 1px;
-    background-color: var(--color-border-default);
-    margin: 1rem 0;
-  }
+

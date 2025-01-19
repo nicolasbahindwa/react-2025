@@ -1,0 +1,102 @@
+// _color-tokens.scss
+// This file serves as a single source of truth for color values
+@use "sass:map";
+@use "../base/colors" as colors; // Correct import
+
+// Function to get color value with validation
+@function get-color($palette, $shade: null, $variant: null) {
+  @if $shade != null {
+    @if not map.has-key($palette, $shade) {
+      @error "Invalid shade: #{$shade} in palette";
+    }
+    @return map.get($palette, $shade);
+  }
+  
+  @if $variant != null {
+    @if not map.has-key($palette, $variant) {
+      @error "Invalid variant: #{$variant} in palette";
+    }
+    @return map.get($palette, $variant);
+  }
+  
+  @return $palette;
+}
+
+// Mixins for common color patterns
+@mixin interactive-transition {
+  transition: 
+    background-color 0.2s ease-in-out,
+    border-color 0.2s ease-in-out,
+    color 0.2s ease-in-out;
+}
+
+// CSS Custom Properties (Variables)
+:root {
+  // Generate semantic color variables
+  @each $key, $value in colors.$color-text {
+    --text-#{$key}: #{$value};
+  }
+  
+  @each $key, $value in colors.$color-background {
+    --bg-#{$key}: #{$value};
+  }
+  
+  @each $key, $value in colors.$color-border {
+    --border-#{$key}: #{$value};
+  }
+  
+  @each $key, $value in colors.$color-action {
+    --action-#{$key}: #{$value};
+  }
+  
+  // Generate palette color variables
+  @each $shade, $value in colors.$color-primary {
+    --primary-#{$shade}: #{$value};
+  }
+  
+  @each $shade, $value in colors.$color-neutral {
+    --neutral-#{$shade}: #{$value};
+  }
+  
+  // Generate feedback color variables
+  @each $shade, $value in colors.$color-success {
+    --success-#{$shade}: #{$value};
+  }
+  
+  @each $shade, $value in colors.$color-warning {
+    --warning-#{$shade}: #{$value};
+  }
+  
+  @each $shade, $value in colors.$color-error {
+    --error-#{$shade}: #{$value};
+  }
+  
+  @each $shade, $value in colors.$color-info {
+    --info-#{$shade}: #{$value};
+  }
+}
+
+// Utility classes
+.text {
+  @each $key, $value in colors.$color-text {
+    &-#{$key} {
+      color: var(--text-#{$key});
+    }
+  }
+}
+
+.bg {
+  @each $key, $value in colors.$color-background {
+    &-#{$key} {
+      background-color: var(--bg-#{$key});
+    }
+  }
+}
+
+.border {
+  @each $key, $value in colors.$color-border {
+    &-#{$key} {
+      border-color: var(--border-#{$key});
+    }
+  }
+}

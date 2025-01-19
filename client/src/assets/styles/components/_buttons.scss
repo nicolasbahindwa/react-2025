@@ -1,24 +1,215 @@
 @use "sass:map";
-@use "../themes/variables" as v;
-@use "../functions/functions" as f;
+@use "../base/colors" as colors;
 
-.btn {
+// Common button base styles
+@mixin button-base {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: f.get-spacing(2) f.get-spacing(3);  // Using the function
-  border-radius: var(--radius-md);
-  font-size: 1rem;
+  padding: 0.5rem 1rem;
   font-weight: 500;
-  line-height: 1.5;
-  transition: var(--transition-colors);
-  
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  transition: 
+    background-color 0.2s ease-in-out,
+    border-color 0.2s ease-in-out,
+    color 0.2s ease-in-out,
+    box-shadow 0.2s ease-in-out;
+  cursor: pointer;
+
+  &:disabled {
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  // Optional: Loading state
+  &--loading {
+    position: relative;
+    pointer-events: none;
+    opacity: 0.7;
+  }
+}
+
+.button {
+  @include button-base;
+
+  // Primary Button
   &--primary {
-    background-color: rgb(var(--color-primary));
-    color: rgb(var(--bg-primary));
-    
+    background-color: var(--action-primary);
+    color: var(--text-inverse);
+    border: 1px solid transparent;
+
     &:hover {
-      background-color: rgb(var(--color-primary) / 0.9);
+      background-color: var(--action-primary-hover);
+    }
+
+    &:active {
+      background-color: var(--action-primary-active);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--border-focus);
+      outline-offset: 2px;
+    }
+
+    &:disabled {
+      background-color: var(--action-primary-disabled);
+      color: var(--text-disabled);
+    }
+  }
+
+  // Secondary Button
+  &--secondary {
+    background-color: var(--bg-surface);
+    color: var(--text-primary);
+    border: 1px solid var(--border-default);
+
+    &:hover {
+      background-color: var(--bg-surface-alt);
+      border-color: var(--border-strong);
+    }
+
+    &:active {
+      background-color: var(--action-secondary-active);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--border-focus);
+      outline-offset: 2px;
+    }
+
+    &:disabled {
+      background-color: var(--bg-surface);
+      color: var(--text-disabled);
+      border-color: var(--border-default);
+    }
+  }
+
+  // Tertiary/Text Button
+  &--tertiary {
+    background-color: transparent;
+    color: var(--text-primary);
+    border: none;
+
+    &:hover {
+      background-color: var(--bg-surface-alt);
+    }
+
+    &:active {
+      background-color: var(--action-secondary-active);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--border-focus);
+      outline-offset: 2px;
+    }
+
+    &:disabled {
+      color: var(--text-disabled);
+      background-color: transparent;
+    }
+  }
+
+  // Success Button
+  &--success {
+    background-color: var(--success-500);
+    color: var(--text-inverse);
+    border: 1px solid transparent;
+
+    &:hover {
+      background-color: var(--success-600);
+    }
+
+    &:active {
+      background-color: var(--success-700);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--success-400);
+      outline-offset: 2px;
+    }
+
+    &:disabled {
+      background-color: var(--success-200);
+      color: var(--text-disabled);
+    }
+  }
+
+  // Warning Button
+  &--warning {
+    background-color: var(--warning-500);
+    color: var(--text-primary);
+    border: 1px solid transparent;
+
+    &:hover {
+      background-color: var(--warning-600);
+    }
+
+    &:active {
+      background-color: var(--warning-700);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--warning-400);
+      outline-offset: 2px;
+    }
+
+    &:disabled {
+      background-color: var(--warning-200);
+      color: var(--text-disabled);
+    }
+  }
+
+  // Error/Danger Button
+  &--error {
+    background-color: var(--error-500);
+    color: var(--text-inverse);
+    border: 1px solid transparent;
+
+    &:hover {
+      background-color: var(--error-600);
+    }
+
+    &:active {
+      background-color: var(--error-700);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--error-400);
+      outline-offset: 2px;
+    }
+
+    &:disabled {
+      background-color: var(--error-200);
+      color: var(--text-disabled);
+    }
+  }
+
+  // Size variants
+  &--small {
+    padding: 0.375rem 0.75rem;
+    font-size: 0.75rem;
+  }
+
+  &--large {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+  }
+
+  // Full width variant
+  &--full {
+    width: 100%;
+  }
+
+  // Icon support
+  &__icon {
+    &--left {
+      margin-right: 0.5rem;
+    }
+
+    &--right {
+      margin-left: 0.5rem;
     }
   }
 }
