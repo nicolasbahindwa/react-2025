@@ -22,16 +22,13 @@ const MainLayout: React.FC = () => {
     }, [theme]);
 
     return (
-        
-        <>
-       
-            <Header />
-            <main>
-                <Outlet />
-            </main>
-            <Footer />
-         
-        </>
+      <>
+        <Header />
+        <main className="w-full md:w-lg xxl:w-full">
+          <Outlet />
+        </main>
+        <Footer />
+      </>
     );
 };
 

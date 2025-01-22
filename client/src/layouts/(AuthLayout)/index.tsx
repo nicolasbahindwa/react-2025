@@ -13,18 +13,14 @@ function Login() {
     document.body.setAttribute("data-theme", theme);
   }, [theme])
   return (
-    
-      <>
-
-          <Header />
-          <main>
-              <Outlet />
-          </main>
-          <Footer />
-          
-      </>
-     
-  )
+    <>
+      <Header />
+      <main className="w-full" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        <Outlet />
+      </main>
+      <Footer />
+    </>
+  );
 }
 
 export default Login
