@@ -3,7 +3,6 @@ import { Outlet } from 'react-router-dom';
 import Header from '../../components/shared/layout/Header';
 import Footer from '../../components/shared/layout/Footer';
 import useTheme from "../../context/ThemeContext/useTheme";
-import "../../assets/styles/main.scss"
  
  
 

@@ -11,7 +11,7 @@ import useTheme from "../../context/ThemeContext/useTheme";
 // import "../../assets/styles/themes/light.css";
 // import "../../assets/styles/themes/dark.css";
 // import "../../assets/styles/themes/ThemeToggle.css"
-import "../../assets/styles/main.scss"
+ 
 
 const MainLayout: React.FC = () => {
     const {theme}  = useTheme();

@@ -76,9 +76,13 @@
 
 
 // Button Component Classes
+// Button Component Classes
 .btn {
   font-weight: 500;
   transition: all 0.2s ease-in-out;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 
   // Sizes
   &-small {
@@ -173,6 +177,33 @@
       cursor: not-allowed;
     }
   }
+
+  // Buttons with Icons
+  &-icon-left {
+    &::before {
+      content: '';
+      display: inline-block;
+      margin-right: 0.5rem;
+      /* Add your icon styles here */
+    }
+  }
+
+  &-icon-right {
+    &::after {
+      content: '';
+      display: inline-block;
+      margin-left: 0.5rem;
+      /* Add your icon styles here */
+    }
+  }
+
+  // Only Icon Button
+  &-icon-only {
+    padding: 0;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 9999px;
+  }
 }
 
 
@@ -192,7 +223,7 @@
   transition: var(--input-transition);
   background-color: var(--input-background);
   color: var(--input-text);
-  border: 2px solid var(--border-error);
+  border: 0;
   width: 100%;
 }
 

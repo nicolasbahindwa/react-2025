@@ -16,7 +16,7 @@ import ThemeProviderWrapper from "./context/ThemeContext/ThemeProvider";
 import { Provider } from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
 import {store, persistor} from '@/store';
-
+import "../src/assets/styles/main.scss";
  
  
 
