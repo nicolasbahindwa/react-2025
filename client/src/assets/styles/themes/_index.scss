@@ -1,8 +1,1 @@
-@use "sass:map";
- 
-@use  './light';
-@use  './dark';
- 
-
-// $light-theme: light.$light-theme;
-// $dark-theme: dark.$dark-theme;
+@use './themes.scss'

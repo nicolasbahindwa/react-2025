@@ -40,7 +40,7 @@ function LoginPage() {
   };
 
   return (
-    <div className=" w-full md:w-lg lg:w-xl border-1 border-sm border-primary-500 rounded-lg">
+    <div className=" w-full md:w-lg lg:w-xl border-1 border-sm border-primary-500 rounded-lg"  >
       <div className="max-w-md mx-auto p-6 border-1 border-sm border-primary-500 rounded-lg">
         <h2 className="text-20 border-1 border-primary-500 font-semibold border-1 text-center   border-neutral-400">
           Login to Your Account
@@ -77,7 +77,7 @@ function LoginPage() {
             isLoading={isLoading} // Make sure isLoading is passed correctly
             disabled={isLoading}
             variant="secondary" // Specify the variant instead of using className
-            className="btn btn-primary p- btn-medium btn-rounded"
+            className="button--secondary"
           >
             Login
           </Button>

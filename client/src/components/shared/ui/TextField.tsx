@@ -50,11 +50,10 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
           id={inputId}
           required={required}
           className={cn(
-            "input flex border-1 border-primary-500   p-1 w-full rounded-md text-12",
-            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
-            "disabled:cursor-not-allowed disabled:opacity-50",
-            error && "border-error-500 focus-visible:ring-red-500",
-            "input-placeholder", // Arbitrary values
+            "input ",
+            "input:disabled",
+            error && "input-error",
+            
             className
           )}
           aria-invalid={!!error}

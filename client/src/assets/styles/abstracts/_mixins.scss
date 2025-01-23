@@ -3,7 +3,7 @@
 @use "sass:meta";
 @use "sass:string";
 @use "./variables" as v;
-@use "../base/colors" as c;
+ 
 
 
 // Responsive Width Utilities
@@ -45,3 +45,31 @@ $widths: (
 
 // Usage: Include the mixin to generate the classes
 @include generate-width-classes;
+
+
+// icons size:
+// Define a map of icon sizes
+$icon-sizes: (
+  'xs': 12px,
+  'sm': 16px,
+  'md': 24px,
+  'lg': 32px,
+  'xl': 48px,
+  'xxl': 64px,
+);
+
+// Generate icon size classes
+@each $name, $size in $icon-sizes {
+  .icon-#{$name} {
+    width: $size;
+    height: $size;
+    // Ensure icons maintain their aspect ratio
+    object-fit: contain;
+  }
+}
+
+// Optional: Add a class for responsive icons
+.icon-responsive {
+  width: 100%;
+  height: auto;
+}

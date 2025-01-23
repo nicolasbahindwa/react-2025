@@ -1,5 +1,5 @@
 @use "sass:map";
-@use "../base/colors" as colors;
+@use "../themes/" as *;
 
 // Common button base styles
 @mixin button-base {
@@ -36,153 +36,143 @@
 
   // Primary Button
   &--primary {
-    background-color: var(--action-primary);
-    color: var(--text-inverse);
+    background-color: var(--);
+    color: var(--color-text-primary);
     border: 1px solid transparent;
 
     &:hover {
-      background-color: var(--action-primary-hover);
+       
     }
 
     &:active {
-      background-color: var(--action-primary-active);
+       
     }
 
     &:focus-visible {
-      outline: 2px solid var(--border-focus);
+      
       outline-offset: 2px;
     }
 
     &:disabled {
-      background-color: var(--action-primary-disabled);
+      
       color: var(--text-disabled);
     }
   }
 
   // Secondary Button
   &--secondary {
-    background-color: var(--bg-surface);
-    color: var(--text-primary);
+    
+     
     border: 1px solid var(--border-default);
 
     &:hover {
-      background-color: var(--bg-surface-alt);
+       
       border-color: var(--border-strong);
     }
 
     &:active {
-      background-color: var(--action-secondary-active);
+       
     }
 
     &:focus-visible {
-      outline: 2px solid var(--border-focus);
+       
       outline-offset: 2px;
     }
 
     &:disabled {
-      background-color: var(--bg-surface);
-      color: var(--text-disabled);
-      border-color: var(--border-default);
+       
     }
   }
 
   // Tertiary/Text Button
   &--tertiary {
-    background-color: transparent;
-    color: var(--text-primary);
+    
     border: none;
 
     &:hover {
-      background-color: var(--bg-surface-alt);
+      
     }
 
     &:active {
-      background-color: var(--action-secondary-active);
+       
     }
 
     &:focus-visible {
-      outline: 2px solid var(--border-focus);
+       
       outline-offset: 2px;
     }
 
     &:disabled {
-      color: var(--text-disabled);
-      background-color: transparent;
+     
     }
   }
 
   // Success Button
   &--success {
-    background-color: var(--success-500);
-    color: var(--text-inverse);
+     
     border: 1px solid transparent;
 
     &:hover {
-      background-color: var(--success-600);
+       
     }
 
     &:active {
-      background-color: var(--success-700);
+       
     }
 
     &:focus-visible {
-      outline: 2px solid var(--success-400);
+       
       outline-offset: 2px;
     }
 
     &:disabled {
-      background-color: var(--success-200);
-      color: var(--text-disabled);
+       
     }
   }
 
   // Warning Button
   &--warning {
-    background-color: var(--warning-500);
-    color: var(--text-primary);
+     
     border: 1px solid transparent;
 
     &:hover {
-      background-color: var(--warning-600);
+       
     }
 
     &:active {
-      background-color: var(--warning-700);
+       
     }
 
     &:focus-visible {
-      outline: 2px solid var(--warning-400);
+       
       outline-offset: 2px;
     }
 
     &:disabled {
-      background-color: var(--warning-200);
+       
       color: var(--text-disabled);
     }
   }
 
   // Error/Danger Button
   &--error {
-    background-color: var(--error-500);
-    color: var(--text-inverse);
+    
     border: 1px solid transparent;
 
     &:hover {
-      background-color: var(--error-600);
+       
     }
 
     &:active {
-      background-color: var(--error-700);
+       
     }
 
     &:focus-visible {
-      outline: 2px solid var(--error-400);
-      outline-offset: 2px;
+       
     }
 
     &:disabled {
-      background-color: var(--error-200);
-      color: var(--text-disabled);
+       
     }
   }
 

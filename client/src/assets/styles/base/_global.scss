@@ -1,33 +1,29 @@
 /* Global styles */
 @use "sass:map";
-@use "../base/colors" as c;
+@use "../themes/" as *;
 @use "../abstracts/variables" as v;
 
-
 @font-face {
-    font-family: 'Poppins';
-    src: url('../../fonts/Poppins-Regular.ttf') format('truetype'),
-         url('../../fonts/Poppins-Italic.ttf') format('truetype'),
-         url('../../fonts/Poppins-Light.ttf') format('truetype'),
-         url('../../fonts/Poppins-LightItalic.ttf') format('truetype'),
-         url('../../fonts/Poppins-Medium.ttf') format('truetype'),
-         url('../../fonts/Poppins-MediumItalic.ttf') format('truetype'),
-         url('../../fonts/Poppins-SemiBold.ttf') format('truetype'),
-         url('../../fonts/Poppins-SemiBoldItalic.ttf') format('truetype'),
-         url('../../fonts/Poppins-Bold.ttf') format('truetype'),
-         url('../../fonts/Poppins-BoldItalic.ttf') format('truetype'),
-         url('../../fonts/Poppins-ExtraBold.ttf') format('truetype'),
-         url('../../fonts/Poppins-ExtraBoldItalic.ttf') format('truetype'),
-         url('../../fonts/Poppins-Black.ttf') format('truetype'),
-         url('../../fonts/Poppins-BlackItalic.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-  }
-  
- 
- 
-  
-  /* Document */
+  font-family: 'Poppins';
+  src: url('../../fonts/Poppins-Regular.ttf') format('truetype'),
+       url('../../fonts/Poppins-Italic.ttf') format('truetype'),
+       url('../../fonts/Poppins-Light.ttf') format('truetype'),
+       url('../../fonts/Poppins-LightItalic.ttf') format('truetype'),
+       url('../../fonts/Poppins-Medium.ttf') format('truetype'),
+       url('../../fonts/Poppins-MediumItalic.ttf') format('truetype'),
+       url('../../fonts/Poppins-SemiBold.ttf') format('truetype'),
+       url('../../fonts/Poppins-SemiBoldItalic.ttf') format('truetype'),
+       url('../../fonts/Poppins-Bold.ttf') format('truetype'),
+       url('../../fonts/Poppins-BoldItalic.ttf') format('truetype'),
+       url('../../fonts/Poppins-ExtraBold.ttf') format('truetype'),
+       url('../../fonts/Poppins-ExtraBoldItalic.ttf') format('truetype'),
+       url('../../fonts/Poppins-Black.ttf') format('truetype'),
+       url('../../fonts/Poppins-BlackItalic.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Document */
 html {
   font-size: 16px;
   scroll-behavior: smooth;
@@ -35,17 +31,22 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 
- 
-body { 
-  color: var(--color-text-primary); 
-  // background-color: create-css-var("color-background-primary");
-  background-color: var(--color-background-primary); 
-  line-height: 1.5; 
-  text-rendering: optimizeSpeed; 
-  margin: 0; 
-  padding: 0; 
+body {
+  color: var(--color-text-primary); // Ensure this variable is defined
+  background-color: var( --color-bg-primary); // Fixed typo
+  line-height: 1.5;
+  text-rendering: optimizeSpeed;
+  margin: 0;
+  padding: 0;
   font-family: v.$font-family-base;
   min-height: 100vh;
- }
-  
+}
 
+.container-flex {
+  width: 100%;
+  min-height: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}

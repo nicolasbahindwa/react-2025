@@ -1,4 +1,5 @@
 import { TextField } from '@/components/shared/ui/TextField';
+import { Checkbox } from '../../../../components/shared/ui/Checkbox';
 import { UseFormRegister, FieldErrors } from 'react-hook-form';
 import { FormLogin } from '../../types';
 
@@ -17,6 +18,7 @@ export const LoginFormFields: React.FC<Props> = ({ register, errors, isLoading }
       required
       error={errors.email?.message}
       placeholder="Enter your email"
+      className="input-small"
       disabled={isLoading}
     />
     <TextField
@@ -26,16 +28,17 @@ export const LoginFormFields: React.FC<Props> = ({ register, errors, isLoading }
       required
       error={errors.password?.message}
       placeholder="Enter your password"
+      className="input-small"
       disabled={isLoading}
     />
     <div className="flex items-center">
-      <input
-        type="checkbox"
-        {...register('rememberMe')}
-        className="h-4 w-4 text-blue-600"
-        disabled={isLoading}
+    <Checkbox
+        label="Accept terms and conditions"
+        helperText="You must agree to the terms to proceed."
+        id="terms"
       />
-      <label className="ml-2 text-sm text-gray-600">Remember Me</label>
+       
+       
     </div>
   </>
 );

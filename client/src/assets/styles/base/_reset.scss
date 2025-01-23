@@ -2,7 +2,7 @@
 @use "sass:map";
 @use "sass:math";
 @use '../abstracts/variables' as v;
-@use './colors' as color;
+@use '../themes/' as *;
 
 *, *::before, *::after {
   margin: 0;
@@ -16,7 +16,6 @@
 
 /* Typography */
 h1, h2, h3, h4, h5, h6 {
-  font-weight: map.get(v.$font-weights, "bold");
   line-height: 1.2;
 }
 
@@ -30,7 +29,7 @@ img, picture, video, canvas, svg {
 /* Forms */
 input, button, textarea, select {
   font: inherit;
-  color: map.get(color.$color-neutral, 800)
+  // color: map.get(color.$color-neutral, 800)
 }
 
 /* Remove list styles */

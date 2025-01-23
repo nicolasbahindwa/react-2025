@@ -1,7 +1,3 @@
  
 @use "sass:map";
-@use "../themes/variables" as v;
-
-@function get-spacing($key) {
-  @return map.get(v.$spacings, $key);
-}
+ 

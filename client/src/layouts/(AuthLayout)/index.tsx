@@ -13,13 +13,13 @@ function Login() {
     document.body.setAttribute("data-theme", theme);
   }, [theme])
   return (
-    <>
+    <div className='container-flex'>
       <Header />
-      <main className="w-full" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+      <main className="w-full">
         <Outlet />
       </main>
       <Footer />
-    </>
+    </div>
   );
 }
 
