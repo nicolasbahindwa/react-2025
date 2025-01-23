@@ -1,4 +1,67 @@
 @use "sass:map";
+@use "sass:color";
+
+$color-tokens: (
+  neutral: (
+    50: #FFFFFF,
+    100: #F5F7F8,
+    150: #E8EBEC,
+    200: #E1E7E9,
+    250: #D4D9DB,
+    300: #C7CED1,
+    350: #B9C1C4,
+    400: #A5AFB4,
+    500: #7A878E,
+    600: #526167,
+    700: #334347,
+    800: #1F2A2E,
+    900: #0A1214
+  ),
+  brand: (
+    primary: (
+      base: #264653,
+      light: color.scale(#264653, $lightness: 20%),
+      dark: color.scale(#264653, $lightness: -20%),
+      muted: color.scale(#264653, $saturation: -30%)
+    ),
+    secondary: (
+      base: #2a9d8f,
+      light: color.scale(#85cec5, $lightness: 20%),
+      dark: color.scale(#85cec5, $lightness: -20%),
+      muted: color.scale(#85cec5, $saturation: -30%)
+    )
+  ),
+  ui: (
+    background: #FFFFFF,
+    surface: #F5F7F8,
+    border: #C7CED1
+  ),
+  text: (
+    primary: #1A2224,
+    secondary: #526167,
+    light: color.scale(#2a9d8f, $saturation: -30%),
+    muted: #7A878E,
+    inverse: #FFFFFF
+  ),
+  state: (
+    success: (
+      base: #2A8464,
+      light: #4CA085,
+      dark: #1B6B4D
+    ),
+    warning: (
+      base: #D99836,
+      light: #E6B05C,
+      dark: #B37D24
+    ),
+    error: (
+      base: #D94545,
+      light: #E66A6A,
+      dark: #B32F2F
+    )
+  )
+);
+
 
 // Breakpoints
 $breakpoints: (

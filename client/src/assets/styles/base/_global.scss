@@ -1,7 +1,10 @@
 /* Global styles */
 @use "sass:map";
-@use "../themes/" as *;
-@use "../abstracts/variables" as v;
+// @use "../themes/" as *;
+@use "../abstracts/variables" as *;
+@use "../functions/" as *;
+@use "../abstracts/mixins" as *;
+@use "../utils/" as *;
 
 @font-face {
   font-family: 'Poppins';
@@ -23,6 +26,16 @@
   font-style: normal;
 }
 
+
+
+:root {
+  @include generate-theme($mode: 'light');
+}
+
+[data-theme="dark"] {
+  @include generate-theme($mode: 'dark');
+}
+
 /* Document */
 html {
   font-size: 16px;
@@ -38,7 +51,7 @@ body {
   text-rendering: optimizeSpeed;
   margin: 0;
   padding: 0;
-  font-family: v.$font-family-base;
+  font-family: $font-family-base;
   min-height: 100vh;
 }
 

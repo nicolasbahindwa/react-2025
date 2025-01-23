@@ -1,3 +1,31 @@
- 
 @use "sass:map";
- 
+@use "../abstracts/variables" as *;
+@use "../base/colors" as *;
+
+@function get-color($category, $shade: 'base', $variant: null) {
+  @if not map.has-key($color-tokens, $category) {
+    @error 'Color category "#{$category}" does not exist. Available categories: #{map.keys($color-tokens)}';
+  }
+
+  $selected-category: map.get($color-tokens, $category);
+
+  @if $variant != null {
+    @if not map.has-key($selected-category, $shade) {
+      @error 'Shade "#{$shade}" not found in category "#{$category}". Available shades: #{map.keys($selected-category)}';
+    }
+
+    $shade-map: map.get($selected-category, $shade);
+
+    @if not map.has-key($shade-map, $variant) {
+      @error 'Variant "#{$variant}" not found in shade "#{$shade}" of category "#{$category}". Available variants: #{map.keys($shade-map)}';
+    }
+
+    @return map.get($shade-map, $variant);
+  }
+
+  @if not map.has-key($selected-category, $shade) {
+    @error 'Shade "#{$shade}" not found in category "#{$category}". Available shades: #{map.keys($selected-category)}';
+  }
+
+  @return map.get($selected-category, $shade);
+}

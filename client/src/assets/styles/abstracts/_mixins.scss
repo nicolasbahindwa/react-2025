@@ -2,7 +2,11 @@
 @use "sass:math";
 @use "sass:meta";
 @use "sass:string";
-@use "./variables" as v;
+@use "sass:list";
+@use "sass:color";
+@use "../functions/" as *;
+@use "../abstracts/variables" as *;
+@use "../base/colors" as *;
  
 
 
@@ -73,3 +77,52 @@ $icon-sizes: (
   width: 100%;
   height: auto;
 }
+
+
+// color mixin
+
+@mixin generate-theme($mode: 'light') {
+  @if $mode != 'light' and $mode != 'dark' {
+    @error 'Invalid theme mode. Use "light" or "dark".';
+  }
+
+  // Background Colors
+  --color-bg-primary: #{get-color('neutral', if($mode == 'light', 50, 900))};
+  --color-bg-secondary: #{get-color('neutral', if($mode == 'light', 100, 800))};
+  --color-bg-tertiary: #{get-color('neutral', if($mode == 'light', 200, 700))};
+
+  // Text Colors
+  --color-text-primary: #{get-color('neutral', if($mode == 'light', 900, 50))};
+  --color-text-secondary: #{get-color('neutral', if($mode == 'light', 700, 200))};
+  --color-text-muted: #{get-color('neutral', if($mode == 'light', 500, 400))};
+
+  // Brand Colors
+  // @each $type in ('primary', 'secondary') {
+  //   @each $variant in ('base', 'light', 'dark', 'muted') {
+  //     --color-brand-#{$type}-#{$variant}: #{if($mode == 'light', get-color('brand', $type, $variant), color.scale(get-color('brand', $type, $variant), $lightness: 20%))};
+  //   }
+  // }
+
+  // // State Colors
+  // @each $state in ('success', 'warning', 'error') {
+  //   @each $variant in ('base', 'light', 'dark') {
+  //     --color-#{$state}-#{$variant}: #{if($mode == 'light', get-color('state', $state, $variant), color.scale(get-color('state', $state, $variant), $lightness: 20%))};
+  //   }
+  // }
+
+  // // Border and Divider Colors
+  // --color-border-primary: #{get-color('neutral', if($mode == 'light', 300, 600))};
+  // --color-border-subtle: #{get-color('neutral', if($mode == 'light', 200, 700))};
+
+  // // Overlay Variations
+  // @each $intensity in ('light', 'medium', 'dark') {
+  //   $base-color: get-color('neutral', if($mode == 'light', 900, 50));
+  //   @if type-of($base-color) == 'color' {
+  //     --color-overlay-#{$intensity}: #{rgba($base-color, if($mode == 'light', 0.1 * list.index(('light', 'medium', 'dark'), $intensity), 0.2 * list.index(('light', 'medium', 'dark'), $intensity)))};
+  //   } @else {
+  //     @error '$base-color: #{get-color("neutral", if($mode == "light", 900, 50))} is not a color.';
+  //   }
+  // }
+}
+
+
