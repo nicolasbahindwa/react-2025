@@ -2,9 +2,12 @@
 @use "sass:map";
 // @use "../themes/" as *;
 @use "../abstracts/variables" as *;
-@use "../functions/" as *;
-@use "../abstracts/mixins" as *;
-@use "../utils/" as *;
+ 
+// @use "../functions/" as *;
+// @use "../abstracts/mixins" as *;
+// @use "../utilities/" as *;
+
+ 
 
 @font-face {
   font-family: 'Poppins';
@@ -28,17 +31,11 @@
 
 
 
-:root {
-  @include generate-theme($mode: 'light');
-}
 
-[data-theme="dark"] {
-  @include generate-theme($mode: 'dark');
-}
 
 /* Document */
 html {
-  font-size: 16px;
+  font-size: 1rem;
   scroll-behavior: smooth;
   text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
@@ -63,3 +60,6 @@ body {
   align-items: center;
   flex-direction: column;
 }
+
+
+ 

@@ -1,0 +1,39 @@
+@use "sass:map";
+@use "sass:color";
+@use "../utilities/colors" as *;
+ 
+
+@function color-token($category, $shade: null, $tone: null) {
+  // Validate category
+  @if not map.has-key($color-palette, $category) {
+    @error "Invalid color category: #{$category}";
+  }
+
+  $category-map: map.get($color-palette, $category);
+
+  // Neutral handling (numeric keys)
+  @if $category == 'neutral' and $shade != null {
+    @return map.get($category-map, $shade);
+  }
+
+  // Brand/State handling
+  @if $shade != null {
+    @if not map.has-key($category-map, $shade) {
+      @error "Invalid shade for #{$category}: #{$shade}";
+    }
+
+    $shade-map: map.get($category-map, $shade);
+
+    @if $tone != null {
+      @if not map.has-key($shade-map, $tone) {
+        @error "Invalid tone for #{$category} #{$shade}: #{$tone}";
+      }
+      @return map.get($shade-map, $tone);
+    }
+
+    @return $shade-map;
+  }
+
+  @return $category-map;
+}
+ 

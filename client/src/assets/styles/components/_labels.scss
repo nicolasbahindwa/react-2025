@@ -1,0 +1,52 @@
+.label {
+    display: inline-block;
+    color: var(--color-text-base, #333);
+  
+    &--bold {
+      font-weight: bold;
+    }
+    
+    &--italic {
+      font-style: italic;
+    }
+    
+    &--bold-italic {
+      font-weight: bold;
+      font-style: italic;
+    }
+  
+    &--primary {
+      color: var(--color-text-primary);
+    }
+  
+    &--secondary {
+      color: var(--color-secondary, #6c757d);
+    }
+  
+    &--success {
+      color: var(--color-success, #28a745);
+    }
+  
+    &--warning {
+      color: var(--color-warning, #ffc107);
+    }
+  
+    &--error {
+      color: var(--color-error, #dc3545);
+    }
+  
+    &--default {
+      color: var(--color-text-base, #333);
+    }
+    
+    &--helper-text {
+      font-size: 0.875rem;
+      color: red;
+    }
+  
+    &__required {
+      color: var(--color-error, #dc3545);
+      margin-left: 0.25rem;
+    }
+  }
+  

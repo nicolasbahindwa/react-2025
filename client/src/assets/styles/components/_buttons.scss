@@ -1,199 +1,155 @@
 @use "sass:map";
-@use "../themes/" as *;
 
-// Common button base styles
+ 
+
 @mixin button-base {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.5rem 1rem;
+  
+  // Use CSS variables for customization
+  padding: 2px;
   font-weight: 500;
-  border-radius: 0.375rem;
-  font-size: 0.875rem;
+  font-size: 0.85rem;
   line-height: 1.25rem;
+  
+  // border-radius: var(--button-border-radius, 0.25rem);
   transition: 
-    background-color 0.2s ease-in-out,
-    border-color 0.2s ease-in-out,
-    color 0.2s ease-in-out,
-    box-shadow 0.2s ease-in-out;
+  background-color var(--button-transition, 0.2s ease-in-out),
+  border-color var(--button-transition, 0.2s ease-in-out),
+  color var(--button-transition, 0.2s ease-in-out),
+  box-shadow var(--button-transition, 0.2s ease-in-out);
+  
   cursor: pointer;
+  text-decoration: none;
+  user-select: none;
 
   &:disabled {
     cursor: not-allowed;
     pointer-events: none;
-  }
-
-  // Optional: Loading state
-  &--loading {
-    position: relative;
-    pointer-events: none;
-    opacity: 0.7;
+    opacity: 0.5;
   }
 }
 
 .button {
   @include button-base;
 
-  // Primary Button
   &--primary {
-    background-color: var(--);
-    color: var(--color-text-primary);
-    border: 1px solid transparent;
+    background-color: var(--color-brand-primary-dark);
+    color: var(--color-text-white);
+    border: 1px solid var(--color-primary-border);
+    font-weight: 500;
 
     &:hover {
-       
-    }
-
-    &:active {
-       
-    }
-
-    &:focus-visible {
-      
-      outline-offset: 2px;
-    }
-
-    &:disabled {
-      
-      color: var(--text-disabled);
+      background-color: var(--color-brand-primary-light);
     }
   }
 
-  // Secondary Button
   &--secondary {
-    
-     
-    border: 1px solid var(--border-default);
+    background-color: var(--color-secondary);
+    color: var(--color-secondary-text);
+    border: 1px solid var(--color-secondary-border);
 
     &:hover {
-       
-      border-color: var(--border-strong);
-    }
-
-    &:active {
-       
-    }
-
-    &:focus-visible {
-       
-      outline-offset: 2px;
-    }
-
-    &:disabled {
-       
+      background-color: var(--color-secondary-hover);
     }
   }
 
-  // Tertiary/Text Button
   &--tertiary {
-    
-    border: none;
+    background-color: var(--color-tertiary);
+    color: var(--color-tertiary-text);
+    border: 1px solid var(--color-tertiary-border);
 
     &:hover {
-      
-    }
-
-    &:active {
-       
-    }
-
-    &:focus-visible {
-       
-      outline-offset: 2px;
-    }
-
-    &:disabled {
-     
+      background-color: var(--color-tertiary-hover);
     }
   }
-
-  // Success Button
   &--success {
-     
-    border: 1px solid transparent;
-
+    background-color: var(--color-state-success-light);
+    color: var(--color-text-primary);
     &:hover {
-       
-    }
-
-    &:active {
-       
-    }
-
-    &:focus-visible {
-       
-      outline-offset: 2px;
-    }
-
-    &:disabled {
-       
+      background-color: var(--color-bg-tertiary);
     }
   }
 
-  // Warning Button
   &--warning {
-     
-    border: 1px solid transparent;
-
-    &:hover {
-       
-    }
-
-    &:active {
-       
-    }
-
-    &:focus-visible {
-       
-      outline-offset: 2px;
-    }
-
-    &:disabled {
-       
-      color: var(--text-disabled);
-    }
-  }
-
-  // Error/Danger Button
-  &--error {
+    background-color: var(--color-state-warning-light);
+    color: var(--color-warning-text);
     
-    border: 1px solid transparent;
 
     &:hover {
-       
-    }
-
-    &:active {
-       
-    }
-
-    &:focus-visible {
-       
-    }
-
-    &:disabled {
-       
+      background-color: var(--color-state-warning-dark);
     }
   }
 
-  // Size variants
+  &--error {
+    background-color: var(--color-state-error-base);
+    color: var(--color-error-text);
+    border: 1px solid var(--color-error-border);
+
+    &:hover {
+      background-color: var(--color-state-error-dark);
+    }
+  }
+
+  &--ghost {
+    background-color: transparent;
+    color: var(--color-ghost-text);
+    border: 1px solid transparent;
+
+    &:hover {
+      background-color: var(--color-ghost-hover);
+    }
+  }
+
+  &--link {
+    background-color: transparent;
+    color: var(--color-brand-secondary-light);
+    border: 1px solid transparent;
+    text-decoration: underline;
+
+    &:hover {
+      color: var(--color-brand-primary-dark);
+    }
+  }
+
+  // Size modifiers
   &--small {
-    padding: 0.375rem 0.75rem;
+    padding: 0.5rem 1rem;
     font-size: 0.75rem;
   }
 
-  &--large {
-    padding: 0.75rem 1.5rem;
+  &--medium {
+    padding: 0.75rem 1.25rem;
     font-size: 1rem;
   }
 
-  // Full width variant
-  &--full {
-    width: 100%;
+  &--large {
+    padding: 1rem 1.5rem;
+    font-size: 1.25rem;
   }
 
-  // Icon support
+  &--full-width {
+    width: 100%;
+  }
+  &__loading {
+    display: inline-flex;
+    align-items: center;
+
+    span {
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .spinner {
+      margin-left: 0.5rem; /* Add some space between text and spinner */
+    }
+  }
+  // Icon handling
   &__icon {
+    display: inline-flex;
+    align-self: center;
+
     &--left {
       margin-right: 0.5rem;
     }

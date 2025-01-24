@@ -4,29 +4,5 @@
 @use "../themes/" as *;
  
 
- 
-.success-message {
-  color: var(--color-success-base);
-}
-
-.error-message {
-  color: var(--color-error-base);
-}
-
-.info-message {
-  color: var(--color-info-base);
-}
-
-warning-message {
-  color: var(--color-warning-base);
-}
-.warning-button {
-  background-color: var(--color-warning-light);
-}
-
-.error-alert {
-  border-color: var(--color-error-dark);
-}
- 
 
 

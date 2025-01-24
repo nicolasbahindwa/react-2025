@@ -1,7 +1,7 @@
 @use "sass:map";
 @use "../abstracts/variables" as v;
-@use "../functions/functions" as f;
-@use "../themes/" as *;
+ 
+ 
 
 /* Base Input Styles */
 .input {
@@ -25,7 +25,7 @@
 
 /* Input States */
 .input:not(:disabled) {
-  &:hover { border-color: var(--color-brand-primary-light); } // Fixed: Use a valid hover border color
+  &:hover { border-color: var(--b); } // Fixed: Use a valid hover border color
   &:focus {
     outline: none;
     border-color: var(--color-brand-primary); // Fixed: Use a valid focus border color

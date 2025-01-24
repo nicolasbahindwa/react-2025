@@ -18,7 +18,7 @@ export const LoginFormFields: React.FC<Props> = ({ register, errors, isLoading }
       required
       error={errors.email?.message}
       placeholder="Enter your email"
-      className="input-small"
+      className="input-small rounded-md"
       disabled={isLoading}
     />
     <TextField
@@ -28,7 +28,7 @@ export const LoginFormFields: React.FC<Props> = ({ register, errors, isLoading }
       required
       error={errors.password?.message}
       placeholder="Enter your password"
-      className="input-small"
+      className="input-small rounded-md"
       disabled={isLoading}
     />
     <div className="flex items-center">

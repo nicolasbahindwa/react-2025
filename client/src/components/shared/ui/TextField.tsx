@@ -3,7 +3,7 @@ import { ComponentPropsWithoutRef } from "react";
 export interface TextFieldProps extends ComponentPropsWithoutRef<"input"> {
   label?: string;
   helperText?: string;
-  error?: string;
+  error?: boolean;
   containerClassName?: string;
   required?: boolean;
 }
@@ -33,16 +33,18 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
     return (
       <div className={cn("space-y-2", containerClassName)}>
         {label && (
+         
           <Label
+            required
             htmlFor={inputId}
-            required={required}
             className={cn(
-              "block text-sm font-medium",
-              error ? "text-red-500" : "text-gray-700"
+              "block text-sm font-medium"
             )}
+            color="primary"
+            error={error} // This will conditionally set the color to "error" if true
           >
             {label}
-          </Label>
+        </Label>
         )}
 
         <input
@@ -51,7 +53,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
           required={required}
           className={cn(
             "input ",
-            "input:disabled",
+            " ",
             error && "input-error",
             
             className
@@ -68,13 +70,13 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
         />
 
         {helperText && !error && (
-          <p id={`${inputId}-description`} className="text-xs text-neutral-500">
+          <p id={`${inputId}-description`} className="label--text-helper-text">
             {helperText}
           </p>
         )}
 
         {error && (
-          <p id={`${inputId}-error`} className="font-italic font-thin pl-1 text-xs text-error-500">
+          <p id={`${inputId}-error`} className=" label--error label--italic">
             {error}
           </p>
         )}

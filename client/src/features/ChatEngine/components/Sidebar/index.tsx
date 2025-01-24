@@ -4,7 +4,7 @@ import { Plus, MessageSquare } from 'lucide-react';
 
 function SideBar() {
   return (
-    <div className=" border-r border-gray-200">
+    <div className="w-50 bg-red-400 border-r border-gray-200">
         {/* New Chat Button */}
         <div className="p-4 border-b border-gray-200">
           <button className="w-full flex items-center justify-center gap-2 bg-blue-600 text-white rounded-lg py-2 px-4 hover:bg-blue-700">

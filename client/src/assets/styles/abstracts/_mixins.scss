@@ -4,27 +4,12 @@
 @use "sass:string";
 @use "sass:list";
 @use "sass:color";
-@use "../functions/" as *;
-@use "../abstracts/variables" as *;
-@use "../base/colors" as *;
- 
 
+@use "../abstracts/variables" as *;
+@use "../functions/color_functions" as *;
 
 // Responsive Width Utilities
-$breakpoints: (
-  'sm': 320px,    // mobile
-  'md': 789px,    // tablet
-  'lg': 1024px,   // small desktop
-  'xl': 1300px    // large desktop
-);
 
-$widths: (
-  'sm': 100%,     // full width for mobile
-  'md': 750px,    // tablet width
-  'lg': 1024px,    // small desktop width
-  'xl': 1200px,   // large desktop width
-  'full': 100%
-);
 
 // Generate width utility classes
 @mixin generate-width-classes {
@@ -51,6 +36,89 @@ $widths: (
 @include generate-width-classes;
 
 
+// color mixin
+@mixin generate-theme($mode: 'light') {
+  // Background Colors
+  --color-bg-primary: #{color-token('neutral', if($mode == 'light', 50, 900))};
+  --color-bg-secondary: #{color-token('neutral', if($mode == 'light', 100, 800))};
+  --color-bg-tertiary: #{color-token('neutral', if($mode == 'light', 200, 700))};
+
+  // Text Colors
+  --color-text-primary: #{color-token('neutral', if($mode == 'light', 900, 50))};
+  --color-text-secondary: #{color-token('neutral', if($mode == 'light', 700, 200))};
+  --color-text-muted: #{color-token('neutral', if($mode == 'light', 500, 400))};
+  --color-text-white: #{color-token('neutral', if($mode == 'light',50, 900))};
+ 
+
+
+  // Border Colors
+  --color-border-primary: #{color-token('neutral', if($mode == 'light', 300, 600))};
+  --color-border-subtle: #{color-token('neutral', if($mode == 'light', 200, 700))};
+  --color-border-secondary: #{color-token('neutral', if($mode == 'dark', 700, 200))};
+  --color-border-muted: #{color-token('neutral', if($mode == 'dark', 500, 400))};
+
+  // Brand Colors
+  @each $type in ('primary', 'secondary') {
+    @each $variant in ('base', 'light', 'dark') {
+      $color: color-token('brand', $type, $variant);
+      --color-brand-#{$type}-#{$variant}: #{
+        if($mode == 'light', 
+           $color, 
+           color.mix($color, white, 40%)   
+        )
+      };
+    }
+  }
+
+  // State Colors
+  @each $state in ('success', 'warning', 'error') {
+    @each $variant in ('base', 'light', 'dark') {
+      $color: color-token('state', $state, $variant);
+      --color-state-#{$state}-#{$variant}: #{
+        if($mode == 'light', 
+           $color, 
+           color.mix($color, white, 40%)  
+        )
+      };
+    }
+  }
+
+  
+}
+
+
+
+:root {
+  @include generate-theme($mode: 'light');
+}
+
+[data-theme="dark"] {
+  @include generate-theme($mode: 'dark');
+}
+
+
+ 
+
+// Border width utilities
+@mixin generate-border-width-utilities($border-widths) {
+  @each $key, $value in $border-widths {
+    .border-#{$key} { border-width: $value; }
+  }
+}
+ 
+
+// Border radius utilities
+@mixin generate-border-radius-utilities($border-radius) {
+  @each $radius-key, $radius-value in $border-radius {
+    .rounded-#{$radius-key} { border-radius: $radius-value; }
+  }
+}
+
+// Generate the utilities
+@include generate-border-width-utilities($border-widths);
+@include generate-border-radius-utilities($border-radius);
+
+
 // icons size:
 // Define a map of icon sizes
 $icon-sizes: (
@@ -72,57 +140,77 @@ $icon-sizes: (
   }
 }
 
-// Optional: Add a class for responsive icons
-.icon-responsive {
-  width: 100%;
-  height: auto;
-}
 
 
-// color mixin
+// font-size mixin
+$font-sizes: (
+  'xs': clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem),
+  'sm': clamp(0.875rem, 0.825rem + 0.25vw, 1rem),
+  'base': clamp(1rem, 0.95rem + 0.25vw, 1.125rem),
+  'lg': clamp(1.125rem, 1.075rem + 0.25vw, 1.25rem),
+  'xl': clamp(1.25rem, 1.2rem + 0.25vw, 1.5rem),
+  '2xl': clamp(1.5rem, 1.4rem + 0.5vw, 2rem),
+  '3xl': clamp(1.875rem, 1.775rem + 0.5vw, 2.5rem),
+  '4xl': clamp(2.25rem, 2.15rem + 0.5vw, 3rem)
+);
 
-@mixin generate-theme($mode: 'light') {
-  @if $mode != 'light' and $mode != 'dark' {
-    @error 'Invalid theme mode. Use "light" or "dark".';
+@mixin generate-font-size-utilities($font-sizes) {
+  @each $size-key, $size-value in $font-sizes {
+    .text-#{$size-key} { font-size: $size-value; }
   }
-
-  // Background Colors
-  --color-bg-primary: #{get-color('neutral', if($mode == 'light', 50, 900))};
-  --color-bg-secondary: #{get-color('neutral', if($mode == 'light', 100, 800))};
-  --color-bg-tertiary: #{get-color('neutral', if($mode == 'light', 200, 700))};
-
-  // Text Colors
-  --color-text-primary: #{get-color('neutral', if($mode == 'light', 900, 50))};
-  --color-text-secondary: #{get-color('neutral', if($mode == 'light', 700, 200))};
-  --color-text-muted: #{get-color('neutral', if($mode == 'light', 500, 400))};
-
-  // Brand Colors
-  // @each $type in ('primary', 'secondary') {
-  //   @each $variant in ('base', 'light', 'dark', 'muted') {
-  //     --color-brand-#{$type}-#{$variant}: #{if($mode == 'light', get-color('brand', $type, $variant), color.scale(get-color('brand', $type, $variant), $lightness: 20%))};
-  //   }
-  // }
-
-  // // State Colors
-  // @each $state in ('success', 'warning', 'error') {
-  //   @each $variant in ('base', 'light', 'dark') {
-  //     --color-#{$state}-#{$variant}: #{if($mode == 'light', get-color('state', $state, $variant), color.scale(get-color('state', $state, $variant), $lightness: 20%))};
-  //   }
-  // }
-
-  // // Border and Divider Colors
-  // --color-border-primary: #{get-color('neutral', if($mode == 'light', 300, 600))};
-  // --color-border-subtle: #{get-color('neutral', if($mode == 'light', 200, 700))};
-
-  // // Overlay Variations
-  // @each $intensity in ('light', 'medium', 'dark') {
-  //   $base-color: get-color('neutral', if($mode == 'light', 900, 50));
-  //   @if type-of($base-color) == 'color' {
-  //     --color-overlay-#{$intensity}: #{rgba($base-color, if($mode == 'light', 0.1 * list.index(('light', 'medium', 'dark'), $intensity), 0.2 * list.index(('light', 'medium', 'dark'), $intensity)))};
-  //   } @else {
-  //     @error '$base-color: #{get-color("neutral", if($mode == "light", 900, 50))} is not a color.';
-  //   }
-  // }
 }
 
+@include generate-font-size-utilities($font-sizes);
 
+@mixin generate-dynamic-font-size-utilities($max-size, $step: 1, $units: px) {
+  @for $i from 1 through $max-size {
+    $value: $i * $step;
+    .text-
+
+\[#{'#{value}#{$units}'}\]
+
+ { font-size: #{$value}#{$units}; }
+  }
+}
+
+@include generate-dynamic-font-size-utilities(50, 1, px); // From 1px to 50px
+@include generate-dynamic-font-size-utilities(20, 0.1, rem); // From 0.1rem to 2rem
+
+
+
+// flex properties
+@mixin generate-flex-classes {
+  // Flex Direction
+  .flex-row { flex-direction: row; }
+  .flex-row-reverse { flex-direction: row-reverse; }
+  .flex-column { flex-direction: column; }
+  .flex-column-reverse { flex-direction: column-reverse; }
+
+  // Justify Content
+  .justify-start { justify-content: flex-start; }
+  .justify-end { justify-content: flex-end; }
+  .justify-center { justify-content: center; }
+  .justify-between { justify-content: space-between; }
+  .justify-around { justify-content: space-around; }
+  .justify-evenly { justify-content: space-evenly; }
+
+  // Align Items
+  .items-start { align-items: flex-start; }
+  .items-end { align-items: flex-end; }
+  .items-center { align-items: center; }
+  .items-stretch { align-items: stretch; }
+  .items-baseline { align-items: baseline; }
+
+  // Flex Wrap
+  .flex-nowrap { flex-wrap: nowrap; }
+  .flex-wrap { flex-wrap: wrap; }
+  .flex-wrap-reverse { flex-wrap: wrap-reverse; }
+
+  // Base Flex Display
+  .flex { display: flex; }
+  .inline-flex { display: inline-flex; }
+}
+
+ 
+  @include generate-flex-classes;
+ 

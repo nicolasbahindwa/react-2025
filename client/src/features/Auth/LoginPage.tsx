@@ -41,7 +41,7 @@ function LoginPage() {
 
   return (
     <div className=" w-full md:w-lg lg:w-xl border-1 border-sm border-primary-500 rounded-lg"  >
-      <div className="max-w-md mx-auto p-6 border-1 border-sm border-primary-500 rounded-lg">
+      <div className=" flex  flex-column max-w-md mx-auto p-6 border-1 border-sm border-primary-500 rounded-lg">
         <h2 className="text-20 border-1 border-primary-500 font-semibold border-1 text-center   border-neutral-400">
           Login to Your Account
         </h2>
@@ -60,34 +60,27 @@ function LoginPage() {
             errors={errors}
             isLoading={isLoading}
           />
-          {/* <Button
-            type="submit"
-            fullWidth
-            rightIcon={<ArrowRight />}
-            disabled={isLoading}
-            className="button button--tertiary mt-4"
-          >
-            {isLoading ? "Logging in..." : "Login"}
-          </Button> */}
+           
           <Button
-            type="button"
+            type="submit"
             // variant="secondary"
             fullWidth
             rightIcon={!isLoading ? <ArrowRight /> : null}
             isLoading={isLoading} // Make sure isLoading is passed correctly
             disabled={isLoading}
-            variant="secondary" // Specify the variant instead of using className
-            className="button--secondary"
+            variant="primary" // Specify the variant instead of using className
+            className="rounded-md"
+            
           >
             Login
           </Button>
-
-          <Label className="block text-sm text-gray-600">
-            Forgot your password? <a href="/forgot-password">Reset it</a>
-          </Label>
-          <Label className="block text-sm text-gray-600">
-            Don't have an account? <a href="/register">Register now</a>
-          </Label>
+           
+          <p className=" " >
+            Forgot your password? <Button variant="link" href="/forgot-password">Reset it</Button>
+          </p>
+          <p className="" >
+            Don't have an account? <Button variant="link" href="/register">Register now</Button>
+          </p>
         </form>
       </div>
     </div>

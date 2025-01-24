@@ -1,0 +1,36 @@
+@use "sass:map";
+@use "sass:meta";
+@use "./colors" as *;
+ 
+
+
+// utilities/color-utilities.scss
+@each $category, $shades in $color-palette {
+  @each $shade, $value in $shades {
+    @if meta.type-of($value) == 'map' {
+      @each $tone, $color in $value {
+        .bg-#{$category}-#{$shade}-#{$tone} {
+          background-color: $color;
+        }
+        .text-#{$category}-#{$shade}-#{$tone} {
+          color: $color;
+        }
+        .border-#{$category}-#{$shade}-#{$tone} {
+          border-color: $color;
+        }
+      }
+    } @else {
+      .bg-#{$category}-#{$shade} {
+        background-color: $value;
+      }
+      .text-#{$category}-#{$shade} {
+        color: $value;
+      }
+      .border-#{$category}-#{$shade} {
+        border-color: $value;
+      }
+    }
+  }
+}
+
+

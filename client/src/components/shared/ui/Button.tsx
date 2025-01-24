@@ -31,34 +31,31 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         disabled={disabled || isLoading}
         className={cn(
           // Base styles
-          "inline-flex items-center justify-center font-medium rounded-md",
-          "focus:outline-none focus:ring-2 focus:ring-offset-2",
-          "transition-all duration-200",
-          "disabled:opacity-50 disabled:cursor-not-allowed",
+          "button",
           // Variant styles
           variantClass,
           // Size styles
           sizeClass,
           // Full width style
-          fullWidth && "w-full",
+          fullWidth && "button--full-width",
           className
         )}
         {...props}
       >
         {isLoading ? (
-          <div className="flex items-center">
+          <div className="button__loading">
             <span>
-              Loading <Spinner />
+              Loading <Spinner className="spinner" />
             </span>
           </div>
         ) : (
           <>
             {leftIcon && (
-              <span className="mr-2 inline-flex items-center">{leftIcon}</span>
+              <span className="button__icon button__icon--left">{leftIcon}</span>
             )}
             {children}
             {rightIcon && (
-              <span className="ml-2 inline-flex items-center">{rightIcon}</span>
+              <span className="button__icon button__icon--right">{rightIcon}</span>
             )}
           </>
         )}
